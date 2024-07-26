@@ -1,0 +1,15 @@
+#Navbar{
+  box-shadow: rgba(0, 0, 0, 0.275) 0px 25px 20px -30px;
+}
+
+.swiperSlide_bg{
+  background-color: rgba(255, 255, 255, 0.59);
+}
+
+.testimonial_card {
+  width: 320px;
+}
+.testimonial_card img{
+  width: 150px;
+  height: 150px;
+} 
