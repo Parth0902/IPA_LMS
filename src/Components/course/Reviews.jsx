@@ -36,7 +36,7 @@ const Reviews = () => {
             </div>
 
             <div className="flex flex-col items-center gap-5">
-               <p className='text-[20px] font-medium font-popins'>Share your thoughts with other students </p>
+               <p className='text-[20px] font-medium font-popins'>Share your thoughts with others </p>
                <button className='border-[2px] border-[black] px-10 w-[90%] py-2 text-[18px] font-Inter font-medium'>Write a Review</button>
             </div>
 
