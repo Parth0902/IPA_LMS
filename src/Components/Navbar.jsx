@@ -15,11 +15,10 @@ const Navbar = () => {
     <div className='w-full  px-5 xl:px-10 py-2 flex justify-center mb-2 fixed top-0 left-0 z-10 bg-white' id='Navbar'>
       <AlignJustify className='lg:hidden relative top-5 mr-10' onClick={OpenNav}/>
       <div className='w-full flex flex-col gap-10 justify-between items-center lg:flex-row  lg:justify-center xl:gap-7'>
-        <div className='flex flex-1 w-full items-center gap-3'>
+        <Link className='flex flex-1 w-full items-center gap-3' to={'/'}>
                 <img src={Logo} alt="" className='h-20'/>     
                  <h1 className='text-2xl font-semibold'>IPA EDUCATION ACADEMY</h1>              
-        </div>
-
+        </Link>
 
           {
            visible &&
@@ -33,6 +32,7 @@ const Navbar = () => {
           }
 
             <div className='hidden flex-1 gap-5 xl:flex  lg:justify-end lg:items-center'>
+            <Link  className='font-SubHeading text-lg' to={'/demo'}>Demo</Link>
                 <Link  className='font-SubHeading text-lg' to={'/courses'}>Courses</Link>
                 <h4  className='font-SubHeading text-lg'>Contact Us</h4>
                 <Heart/>
