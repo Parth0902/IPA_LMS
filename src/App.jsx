@@ -8,6 +8,8 @@ import Cart from './Pages/Cart';
 import ContactUs from './Pages/ContactUs';
 import Login from './Pages/Login';
 import Signup from './Pages/SignUp';
+import ForgotPassword from './Pages/ForgotPassword';
+import ResetPassword from './Pages/ResetPassword';
 import PrivateRoute from './Components/auth/PrivateRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,8 +25,10 @@ function App() {
           <Route path="/demo" element={<Layout><DemoCourse /></Layout>} />
         </Route>
         {/* General routes */}
+        <Route path="/reset-password/:code" element={<ResetPassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/courses" element={<Layout><Courses /></Layout>} />
         <Route path="/course" element={<Layout><Course /></Layout>} />

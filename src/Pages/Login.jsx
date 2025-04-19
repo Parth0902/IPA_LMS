@@ -12,7 +12,6 @@ const Login = () => {
 
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!emailRegex.test(email)) {
       toast.warn('Please enter a valid email');
       return false;
@@ -71,7 +70,7 @@ const Login = () => {
 
           <div className="text-start mt-4 text-gray-500 px-1">
             Forgot your password?{' '}
-            <Link to="/forgot-password" className="text-blue-600 hover:underline">
+            <Link to="/forgotPassword" className="text-blue-600 hover:underline">
               Reset here
             </Link>
           </div>
