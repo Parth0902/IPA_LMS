@@ -1,107 +1,134 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from 'react';
+import CourseCard from './CourseCard';
+
 const Page = () => {
+  const courses = [
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    {
+      id:1,
+      image: 'https://dummyimage.com/420x260',
+      category: 'CATEGORY',
+      title: 'The Catalyzer',
+      price: '$16.00',
+    },
+    // You can add more course objects here
+  ];
   return (
-        <div className='overflow-y-auto flex min-h-[84vh]'>
-          <section class="text-gray-600 body-font">
-            <div class="container px-5 py-10 mx-auto">
-              <div class="flex flex-wrap -m-4">
-
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-                
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-
-                <Link class="lg:w-1/4 md:w-1/2 p-4 w-full" to={'/course'}>
-                  <a class="block relative h-48 rounded overflow-hidden">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260" />
-                  </a>
-                  <div class="mt-4">
-                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                    <h2 class="text-gray-900 title-font text-lg font-medium">The Catalyzer</h2>
-                    <p class="mt-1">$16.00</p>
-                  </div>
-                </Link>
-
-           
-              </div>
-            </div>
-          </section> 
+    <div className="overflow-y-auto flex min-h-[84vh] w-full px-5">
+      <section className="text-gray-600 body-font w-full">
+        <div className="container py-10 mx-auto">
+          <div className="flex flex-wrap -m-4">
+            {courses.map((course, index) => (
+              <CourseCard
+                key={course.id}
+                image={course.image}
+                category={course.category}
+                title={course.title}
+                price={course.price}
+              />
+            ))}
+          </div>
         </div>
+      </section>
+    </div>
+  );
+};
 
-  )
-}
-
-export default Page
+export default Page;
