@@ -1,29 +1,18 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 
 const VideoPlayer = () => {
-  const videoRef = useRef(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
 
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
-    }
-  };
 
   return (
-    <div className="h-full">
+    <div className="relative w-full h-full">
+      
       <iframe
-        src="https://drive.google.com/file/d/1Bx5PTICzxWkhYSV8FtsrnE4ZVb2yQX9_/preview"
+        title="Video Player"
+        src="https://iframe.mediadelivery.net/embed/411923/50734dbb-277b-425a-a9b5-4f009206defa?token=ce31d2934a64c882d83f493c45ccae561aa13e9dd97a4cea534bfb32bfdcab11&expires=1745523413"
         width="100%"
         height="100%"
         allow="autoplay"
+        allowFullScreen="true"
       ></iframe>
     </div>
   );
