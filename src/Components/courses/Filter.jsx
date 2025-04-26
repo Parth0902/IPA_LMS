@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const FilterGroup = ({ title, options, filterName, onFilterChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [selectedOption, setSelectedOption] = useState('all');
 
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -13,17 +13,18 @@ const FilterGroup = ({ title, options, filterName, onFilterChange }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full px-6">
       <button
-        className="w-full text-left font-semibold text-gray-800 text-sm mb-2"
+        className="flex justify-between w-full font-semibold text-gray-800 text-sm mb-2"
         onClick={toggleDropdown}
       >
         {title}
+        <span>{isOpen ? '-' : '+'}</span>
       </button>
       {isOpen && (
         <div className="space-y-2 pl-2">
           {options.map((option) => (
-            <label key={option.value} className="flex items-center space-x-2 text-sm text-gray-700">
+            <label key={option.value} className="flex items-center gap-2 text-sm text-gray-700">
               <input
                 type="radio"
                 name={filterName}
@@ -31,7 +32,7 @@ const FilterGroup = ({ title, options, filterName, onFilterChange }) => {
                 checked={selectedOption === option.value}
                 onChange={handleOptionChange}
               />
-              <span>{option.label}</span>
+              {option.label}
             </label>
           ))}
         </div>
@@ -39,6 +40,7 @@ const FilterGroup = ({ title, options, filterName, onFilterChange }) => {
     </div>
   );
 };
+
 FilterGroup.propTypes = {
   title: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(
@@ -50,6 +52,5 @@ FilterGroup.propTypes = {
   filterName: PropTypes.string.isRequired,
   onFilterChange: PropTypes.func.isRequired,
 };
-
 
 export default FilterGroup;

@@ -2,28 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const CourseCard = ({ image, category, title, price }) => {
+const CourseCard = ({ image, title, topic, price, guideName }) => {
   return (
-    <Link className="lg:w-1/4 md:w-1/2 p-4 w-full" to="/course">
+    <Link className="w-[380px] h-[260px] p-4 mb-16 " to="/course">
       <div className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300">
         <div className="h-48 overflow-hidden rounded-t-xl">
           <img alt={title} src={image} className="w-full h-full object-cover" />
         </div>
         <div className="p-4">
-          <h3 className="text-xs font-medium text-gray-500 uppercase">{category}</h3>
-          <h2 className="text-lg font-semibold text-gray-800">{title}</h2>
-          <p className="text-sm text-gray-700 mt-1">{price}</p>
+          <h2 className="text-lg font-semibold text-gray-800 mb-1">{title}</h2> {/* Course Name */}
+          <div className="flex justify-between">
+              <p className="text-sm text-gray-500 mb-1">Topic: {topic}</p> {/* Topic */}
+
+              <p className="text-sm text-gray-500">Guide: {guideName}</p>
+          </div>
+          <p className="text-sm text-gray-700 mb-1">Price: {price}</p> {/* Guide Name */}
         </div>
       </div>
     </Link>
   );
 };
+
 CourseCard.propTypes = {
   image: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  topic: PropTypes.string.isRequired,
   price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  guideName: PropTypes.string.isRequired,
 };
-
 
 export default CourseCard;
