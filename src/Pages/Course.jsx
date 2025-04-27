@@ -2,8 +2,11 @@ import React from 'react'
 import Rating from '@mui/material/Rating';
 import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
 import styled from '@emotion/styled';
-import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown } from 'lucide-react';
+import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown,IndianRupee } from 'lucide-react';
 import Reviews from '../Components/course/Reviews'
+import { useQuery } from '@tanstack/react-query';
+import { apiService } from '../services/apiHandler';
+import { useParams } from 'react-router-dom';
 
 const StyledAccordionSummary = styled(AccordionSummary)`
   background-color: #f5f5f5;
@@ -18,216 +21,63 @@ const StyledAccordionDetails = styled(AccordionDetails)`
 `;
 
 const Course = () => {
+
+  const { courseId } = useParams();
+
+  const { data: Data, isLoading, error } = useQuery({
+    queryKey: ['courseData', courseId],
+    queryFn: async () => {
+      return await apiService({ method: 'GET', endpoint: `/getCourseData/${courseId}` });
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-gray-500 text-lg">Loading course data...</div>
+      </div>
+    );
+  }
+
+  if (error || !Data) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-red-500 text-lg">Error loading course data</div>
+      </div>
+    );
+  }
+
+  const { courseData,chapters } = Data;
+  console.log(courseData?.Features?.watchTime);
+  console.log(courseData)
+
   const Features = [
     {
       icon: <Video size={36} />,
-      text: 'Total watch Time of 72hrs'
+      text: `Total watch Time of ${courseData?.Features?.watchTime}`
     },
     {
       icon: <BookMarked size={36} />,
-      text: '12 total chapters'
+      text: `${courseData?.Features?.chapters} total chapters`
     },
     {
       icon: <Newspaper size={36} />,
-      text: 'Chapter Wise Notes'
+      text: `Chapter Wise Notes`
     },
     {
       icon: <NotebookPen size={36} />,
-      text: 'Total Quizes'
+      text: `${courseData?.Features?.quizes} Total Quizes`
     },
     {
       icon: <Trophy size={36} />,
-      text: 'Certificate of Completion'
+      text: `Certificate of Completion`
     },
     {
       icon: <Infinity size={36} />,
-      text: 'Lifetime aceess to course material'
+      text: `Lifetime aceess to course material`
     },
   ]
 
-  const chapters = [
-
-    {
-      name: 'Chapter 1',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 2',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 3',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 4',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 5',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 6',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 7',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 8',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 9',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-    {
-      name: 'Chapter 10',
-      time: '2hrs 30mins',
-      contents: [
-        {
-          name: 'Introduction to course',
-          time: '30mins'
-        },
-        {
-          name: 'Understanding the basics',
-          time: '1hr'
-        },
-        {
-          name: 'Quiz 1',
-          time: '30mins'
-        }
-      ]
-    },
-  ]
 
   return (
     <div className='mt-24'>
@@ -236,13 +86,15 @@ const Course = () => {
 
         </div>
         <div className='w-5/12'>
-          <h4 className='font-Inter text-[40px] font-semibold pt-5'>Course Name</h4>
-          <h2 className='font-popins text-[22px] font-normal pt-3'>The first course on IPA website</h2>
-          <p className='font-SubHeading text-[18px] pt-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis cupiditate aliquid ipsa quidem delectus nesciunt iure est, aliquam veniam voluptates? Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum eos eaque excepturi et pariatur? Nam esse perspiciatis possimus maiores sint tempore aspernatur enim voluptas magni. Mollitia veritatis aut aperiam rem.</p>
+          <h4 className='font-Inter text-[40px] font-semibold pt-5'>{courseData.courseName}</h4>
+          <h2 className='font-popins text-[22px] font-normal pt-3'>{courseData.heading}</h2>
+          <p className='font-SubHeading text-[18px] pt-2'>{courseData.courseDescription}</p>
           <div className='flex flex-col gap-3'>
             <p className='font-popins text-[20px] pt-4 '>Ratings</p>
             <Rating name="read-only" value={4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
           </div>
+
+          <h2 className='font-popins text-[22px] font-normal pt-3 flex gap-3 items-center'> <IndianRupee /> {courseData.coursePrice}</h2>
           <button className='bg-black text-white mt-5 py-3 px-4 font-Roboto font-medium rounded-lg flex gap-3'>
             Add to Cart
             <ShoppingCart color="#ffffff" />
@@ -268,33 +120,53 @@ const Course = () => {
         <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center pb-10'>Chapters of this course</h2>
         {
           chapters.map((chapter, index) => (
-            <Accordion key={index}  className='w-[70%]'>
+            <Accordion key={chapter._id}  className='w-[70%]'>
               <StyledAccordionSummary
                 expandIcon={<ChevronDown />}
                 aria-controls="panel1-content"
                 id="panel1-header"
               >
                 <div className='flex w-full justify-between px-10 items-center'>
-                  <p className='font-popins text-[20px] font-medium'>{chapter.name}</p>
-                  <p>- {chapter.time}</p>
+                  <p className='font-popins text-[20px] font-medium'>{chapter.ModuleName
+                  }</p>
+                  <p>- {chapter.ModuleDuration}</p>
                 </div>
               </StyledAccordionSummary>
               <Divider />
               <StyledAccordionDetails>
-                <ul className='list-disc px-10'>
+                <ul className='list-disc '>
+                <h4 className='font-bold font-popins text-[18px] py-4 px-10 mb-5  bg-slate-300'>Videos</h4>
                   {
-                    chapter.contents.map((content, index) => (
-                      <li key={index} className='flex w-full justify-between items-center'>
+                    chapter.Videos.map((content, index) => (
+                      <li key={index} className='flex w-full justify-between items-center px-10'>
                         <span className='font-popins text-[18px] flex gap-3'>
                           <span className='font-medium w-[10px]'> 
                             {index +1}
                           </span>
-                           {content.name}
+                           {content.videoName}
                         </span>
-                        <span className='w-[100px] font-Inter font-normal text-slate-700'>- {content.time}</span>
+                        <span className='w-[100px] font-Inter font-normal text-slate-700'>- {content.videoDuration}</span>
                       </li>
                     ))
                   }
+
+                 
+
+                  <h4 className='font-bold font-popins text-[18px] py-4  my-5 px-10 w-full bg-slate-300'>quizes</h4>
+                  {
+                    chapter.quizes.map((content, index) => (
+                      <li key={index} className='flex w-full justify-between items-center px-10'>
+                        <span className='font-popins text-[18px] flex gap-3'>
+                          <span className='font-medium w-[10px]'> 
+                            {index +1}
+                          </span>
+                           {content.quizName}
+                        </span>
+                        <span className='w-[100px] font-Inter font-normal text-slate-700'>- {content.quizDuration}</span>
+                      </li>
+                    ))
+                  }
+                 
                 </ul>
 
               </StyledAccordionDetails>
@@ -303,9 +175,10 @@ const Course = () => {
         }
       </section>
 
-      <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Course Reviews</h2>
-      <Reviews/>
-      
+      <section className=' bg-gray-50 py-[60px]'>
+        <h2 className='font-Inter text-[42px] font-semibold  text-center'>Course Reviews</h2>
+        <Reviews/>
+      </section>
       <section>
           <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Recommended courses</h2>
           
