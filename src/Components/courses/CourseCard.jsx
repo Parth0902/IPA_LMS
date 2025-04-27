@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const CourseCard = ({ image, title, topic, price, guideName }) => {
+const CourseCard = ({ image, title, topic, price, guideName,courseId }) => {
   return (
-    <Link className="w-[380px] h-[260px] p-4 mb-16 " to="/course">
+    <Link className="w-[380px] h-[260px] p-4 mb-16 " to={`/course/${courseId}`}>
       <div className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300">
         <div className="h-48 overflow-hidden rounded-t-xl">
           <img alt={title} src={image} className="w-full h-full object-cover" />
@@ -29,6 +29,7 @@ CourseCard.propTypes = {
   topic: PropTypes.string.isRequired,
   price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   guideName: PropTypes.string.isRequired,
+  courseId: PropTypes.string.isRequired,
 };
 
 export default CourseCard;
