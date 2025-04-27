@@ -33,11 +33,14 @@ const Course = () => {
     },
   });
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async() => {
     if (!token) {
-      toast.success("Login first");
+      toast.warn("Login first");
+      return;
     } 
-    // You can also add logic to actually add to cart if logged in
+
+    const res = await apiService({ method: 'post', endpoint: `/addToCart`, token, data: { courseId } });
+    toast.success(res.data.message);
   };
 
   if (isLoading) {

@@ -12,6 +12,7 @@ export default function Cart() {
 
   useEffect(() => {
     const fetchCart = async () => {
+      console.log("useeffect called");
       setIsLoading(true);
       const response = await apiService({
         method: 'GET',
@@ -33,16 +34,20 @@ export default function Cart() {
     fetchCart();
   }, []);
 
-  const removeItem = async(id) => {
-    const data = {courseId : id}
+  const removeItem = async (event, id) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const data = { courseId: id };
     setIsLoading(true);
     const response = await apiService({
-      method:'DELETE',
-      endpoint:'/deleteFromCart',
+      method: 'DELETE',
+      endpoint: '/deleteFromCart',
       token,
       data
-    })
-    toast.success(response.message);
+    });
+
+    toast.success(response.data.message);
+    setCartItems((prevItems) => prevItems.filter((cartItem) => cartItem.id !== id));
     setIsLoading(false);
   };
 
@@ -60,10 +65,10 @@ export default function Cart() {
   }
 
   return (
-    <div className="w-full py-6 flex justify-center mt-20 px-10">
-      <div className="w-full flex flex-col md:flex-row md:gap-12 md:justify-between p-6">
+    <div className="w-full py-6 flex flex-col  mt-20 px-10 h-[80vh]">
+          <h1 className='text-3xl text-left font-bold px-6 mt-6'>Course cart</h1>
+      <div className="w-full flex flex-col md:flex-row md:items-start md:gap-12 md:justify-between p-6 ">
         <div className="w-full md:w-3/4 overflow-x-auto">
-          <h1 className='text-3xl text-left font-bold pb-6'>Course cart</h1>
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-orange-500 text-white rounded-xl">
@@ -82,7 +87,8 @@ export default function Cart() {
                         <h3 className="font-medium">{item.name}</h3>
                         <p className="text-gray-600">Price: ₹ {item.price.toFixed(2)}</p>
                         <button
-                          onClick={() => removeItem(item.id)}
+                        type='button'
+                          onClick={(event) => removeItem(event, item.id)}
                           className="text-slate-700 text-sm hover:text-slate-950"
                         >
                           <Trash2
@@ -108,7 +114,8 @@ export default function Cart() {
             </tbody>
           </table>
         </div>
-        <div className="w-full md:w-1/4 mt-8 md:mt-10 border-t md:border-t-0 border-gray-200 pt-4 md:p-2 shadow-md">
+
+        <div className="w-full md:w-1/4   border-t md:border-t-0 border-gray-200  md:p-5 shadow-md h-auto " >
           <div className="flex justify-between py-2">
             <span>Subtotal</span>
             <span>₹{subtotal.toFixed(2)}</span>
