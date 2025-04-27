@@ -3,7 +3,10 @@ import Rating from '@mui/material/Rating';
 import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
 import styled from '@emotion/styled';
 import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown } from 'lucide-react';
+import {useAuth} from '../Context/AuthContext'
 import Reviews from '../Components/course/Reviews'
+import { toast } from 'react-toastify';
+
 
 const StyledAccordionSummary = styled(AccordionSummary)`
   background-color: #f5f5f5;
@@ -18,6 +21,14 @@ const StyledAccordionDetails = styled(AccordionDetails)`
 `;
 
 const Course = () => {
+
+  const {token} = useAuth();
+
+  const handleAddToCart = ()=>{
+    if(!token){
+      toast.success("login first");
+    } 
+  }
   const Features = [
     {
       icon: <Video size={36} />,
@@ -243,7 +254,10 @@ const Course = () => {
             <p className='font-popins text-[20px] pt-4 '>Ratings</p>
             <Rating name="read-only" value={4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
           </div>
-          <button className='bg-black text-white mt-5 py-3 px-4 font-Roboto font-medium rounded-lg flex gap-3'>
+          <button
+            className='bg-black text-white mt-5 py-3 px-4 font-Roboto font-medium rounded-lg flex gap-3'
+            onClick={handleAddToCart}
+          >
             Add to Cart
             <ShoppingCart color="#ffffff" />
           </button>
@@ -268,7 +282,7 @@ const Course = () => {
         <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center pb-10'>Chapters of this course</h2>
         {
           chapters.map((chapter, index) => (
-            <Accordion key={index}  className='w-[70%]'>
+            <Accordion key={index} className='w-[70%]'>
               <StyledAccordionSummary
                 expandIcon={<ChevronDown />}
                 aria-controls="panel1-content"
@@ -286,10 +300,10 @@ const Course = () => {
                     chapter.contents.map((content, index) => (
                       <li key={index} className='flex w-full justify-between items-center'>
                         <span className='font-popins text-[18px] flex gap-3'>
-                          <span className='font-medium w-[10px]'> 
-                            {index +1}
+                          <span className='font-medium w-[10px]'>
+                            {index + 1}
                           </span>
-                           {content.name}
+                          {content.name}
                         </span>
                         <span className='w-[100px] font-Inter font-normal text-slate-700'>- {content.time}</span>
                       </li>
@@ -304,11 +318,11 @@ const Course = () => {
       </section>
 
       <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Course Reviews</h2>
-      <Reviews/>
-      
+      <Reviews />
+
       <section>
-          <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Recommended courses</h2>
-          
+        <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Recommended courses</h2>
+
       </section>
 
     </div>
