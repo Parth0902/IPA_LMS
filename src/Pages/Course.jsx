@@ -33,11 +33,11 @@ const Course = () => {
     },
   });
 
-  const handleAddToCart = async() => {
+  const handleAddToCart = async () => {
     if (!token) {
       toast.warn("Login first");
       return;
-    } 
+    }
 
     const res = await apiService({ method: 'post', endpoint: `/addToCart`, token, data: { courseId } });
     toast.success(res.data.message);

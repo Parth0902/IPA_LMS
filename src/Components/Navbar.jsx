@@ -1,12 +1,13 @@
-import React,{ useState }  from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
 import { Heart, ShoppingCart, AlignJustify } from 'lucide-react';
 import Logo from '../Assets/logo.png'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 
 const Navbar = () => {
-  const { logout ,isAuthenticated} = useAuth();
+  const { logout, isAuthenticated } = useAuth();
   const [visible, setVisible] = useState(false);
   const OpenNav = () => {
     setVisible(!visible);
@@ -36,14 +37,18 @@ const Navbar = () => {
           <Link className='font-SubHeading text-lg' to={'/courses'}>Courses</Link>
           <Link className='font-SubHeading text-lg' to={'/contactUs'}>Contact Us</Link>
           <Heart />
-          <Link className='font-SubHeading text-lg' to={'/cart'}><ShoppingCart/></Link>
+          <Badge badgeContent={2} color="primary" overlap="circular">
+            <Link className='font-SubHeading text-lg' to={'/cart'}>
+              <ShoppingCart />
+            </Link>
+          </Badge>
           <div className='hidden lg:flex gap-3'>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
             {
-              isAuthenticated?
-              <button className='bg-black py-1 px-3 rounded-md text-white' onClick={logout} >Logout</button>
-              :
-              <Link to={"/login"} className='bg-black py-1 px-4 rounded-md text-white' onClick={logout} >Login</Link>
+              isAuthenticated ?
+                <button className='bg-black py-1 px-3 rounded-md text-white' onClick={logout} >Logout</button>
+                :
+                <Link to={"/login"} className='bg-black py-1 px-4 rounded-md text-white' onClick={logout} >Login</Link>
             }
           </div>
         </div>
