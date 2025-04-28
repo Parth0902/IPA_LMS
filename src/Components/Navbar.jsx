@@ -1,17 +1,37 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import { Heart, ShoppingCart, AlignJustify } from 'lucide-react';
 import Logo from '../Assets/logo.png'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
+import { apiService } from '../services/apiHandler';
 
 const Navbar = () => {
   const { logout, isAuthenticated } = useAuth();
   const [visible, setVisible] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  const { token } = useAuth();
+
   const OpenNav = () => {
     setVisible(!visible);
   }
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      const response = await apiService({
+        method: 'GET',
+        endpoint: '/getCart',
+        token
+      })
+      console.log(response);
+      setCartCount(response.cartData?.length || 0);
+    }
+    fetchCart();
+  }, []);
+
+
   return (
     <div className='w-full  px-5 xl:px-10 py-2 flex justify-center mb-2 fixed top-0 left-0 z-10 bg-white' id='Navbar'>
       <AlignJustify className='lg:hidden relative top-5 mr-10' onClick={OpenNav} />
@@ -37,7 +57,7 @@ const Navbar = () => {
           <Link className='font-SubHeading text-lg' to={'/courses'}>Courses</Link>
           <Link className='font-SubHeading text-lg' to={'/contactUs'}>Contact Us</Link>
           <Heart />
-          <Badge badgeContent={2} color="primary" overlap="circular">
+          <Badge badgeContent={cartCount} color="primary" overlap="circular">
             <Link className='font-SubHeading text-lg' to={'/cart'}>
               <ShoppingCart />
             </Link>
