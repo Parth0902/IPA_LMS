@@ -9,6 +9,7 @@ import { apiService } from '../services/apiHandler';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Context/AuthContext';
+import { useCart } from '../Context/CartContext';
 
 const StyledAccordionSummary = styled(AccordionSummary)`
   background-color: #f5f5f5;
@@ -24,6 +25,7 @@ const StyledAccordionDetails = styled(AccordionDetails)`
 
 const Course = () => {
   const { token } = useAuth();
+  const {addItem} = useCart();
   const { courseId } = useParams();
 
   const { data: Data, isLoading, error } = useQuery({
@@ -38,9 +40,7 @@ const Course = () => {
       toast.warn("Login first");
       return;
     }
-
-    const res = await apiService({ method: 'post', endpoint: `/addToCart`, token, data: { courseId } });
-    toast.success(res.data.message);
+    addItem(courseId);
   };
 
   if (isLoading) {

@@ -1,36 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import { Heart, ShoppingCart, AlignJustify } from 'lucide-react';
 import Logo from '../Assets/logo.png'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
-import { apiService } from '../services/apiHandler';
-
+import {useCart} from '../Context/CartContext';
 const Navbar = () => {
   const { logout, isAuthenticated } = useAuth();
   const [visible, setVisible] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-
-  const { token } = useAuth();
+  const {cartItems} = useCart();
 
   const OpenNav = () => {
     setVisible(!visible);
   }
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      const response = await apiService({
-        method: 'GET',
-        endpoint: '/getCart',
-        token
-      })
-      console.log(response);
-      setCartCount(response.cartData?.length || 0);
-    }
-    fetchCart();
-  }, []);
-
+  const cartCount = cartItems.length;
 
   return (
     <div className='w-full  px-5 xl:px-10 py-2 flex justify-center mb-2 fixed top-0 left-0 z-10 bg-white' id='Navbar'>
@@ -40,7 +25,6 @@ const Navbar = () => {
           <img src={Logo} alt="" className='h-20' />
           <h1 className='text-2xl font-semibold'>IPA EDUCATION ACADEMY</h1>
         </Link>
-
         {
           visible &&
           <div className='flex flex-col gap-10 flex-1 lg:items-center'>
@@ -51,7 +35,6 @@ const Navbar = () => {
             <h4 className='font-SubHeading text-lg'>Profile</h4>
           </div>
         }
-
         <div className='hidden flex-1 gap-5 xl:flex  lg:justify-end lg:items-center'>
           <Link className='font-SubHeading text-lg' to={'/demo'}>Demo</Link>
           <Link className='font-SubHeading text-lg' to={'/courses'}>Courses</Link>
@@ -72,10 +55,7 @@ const Navbar = () => {
             }
           </div>
         </div>
-
-
       </div>
-
     </div>
   )
 }

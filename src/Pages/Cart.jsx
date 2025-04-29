@@ -1,56 +1,15 @@
-import { useState, useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
-import { apiService } from '../services/apiHandler';
-import { useAuth } from '../Context/AuthContext';
-import { toast } from 'react-toastify';
+import { useCart } from '../Context/CartContext';
+
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { cartItems, isLoading, removeItem } = useCart();
 
-  const { token } = useAuth();
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      console.log("useeffect called");
-      setIsLoading(true);
-      const response = await apiService({
-        method: 'GET',
-        endpoint: '/getCart',
-        token: token
-      });
-      const transformedCart = response.cartData.map(item => ({
-        id: item._id,
-        name: item.courseName,
-        price: Number(item.coursePrice), // converting string to number
-        quantity: 1, // default quantity 1
-        image: item.courseThumbNail
-      }));
-
-      setCartItems(transformedCart);
-      console.log(transformedCart);
-      setIsLoading(false);
-    }
-    fetchCart();
-  }, []);
-
-  const removeItem = async (event, id) => {
+  const handleRemove = (event, id) => {
     event.preventDefault();
     event.stopPropagation();
-    const data = { courseId: id };
-    setIsLoading(true);
-    const response = await apiService({
-      method: 'DELETE',
-      endpoint: '/deleteFromCart',
-      token,
-      data
-    });
-
-    toast.success(response.data.message);
-    setCartItems((prevItems) => prevItems.filter((cartItem) => cartItem.id !== id));
-    setIsLoading(false);
+    removeItem(id);
   };
-
 
   const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
   const tax = subtotal * 0; // 17.5% tax rate 0.175
@@ -88,7 +47,7 @@ export default function Cart() {
                         <p className="text-gray-600">Price: ₹ {item.price.toFixed(2)}</p>
                         <button
                         type='button'
-                          onClick={(event) => removeItem(event, item.id)}
+                          onClick={(event) => handleRemove(event, item.id)}
                           className="text-slate-700 text-sm hover:text-slate-950"
                         >
                           <Trash2
