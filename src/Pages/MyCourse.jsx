@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Play, CheckCircle } from 'lucide-react';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { apiService } from '../services/apiHandler';
 import { useAuth } from '../Context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
 export default function CoursePlayer() {
-  const [courseData, setCourseData] = useState(null);
+
   const [activeChapter, setActiveChapter] = useState(0);
   const [activeVideo, setActiveVideo] = useState("");
   const [iframeUrl, setIframeUrl] = useState("");
 
-  const { token } = useAuth();
-  // const {courseId} = useParams();
 
-  useEffect(() => {
-    const fetchCourse = async () => {
+  const { token } = useAuth();
+  const { courseId } = useParams();
+
+  const { data: courseData } = useQuery({
+    queryKey: ['courseData'],
+    queryFn: async () => {
       const response = await apiService({
         method: 'GET',
-        endpoint: `/getCourseData/680e072b4e541c0b057739bf`,
+        endpoint: `/getCourseData/${courseId}`,
         token
       });
-      setCourseData(response);
-    };
-    fetchCourse();
-  }, [token]);
+      return response;
+    },
+    enabled: !!token,
+  });
 
   const selectVideo = async (chapterIndex, videoId) => {
     setActiveChapter(chapterIndex);
@@ -40,7 +43,7 @@ export default function CoursePlayer() {
   };
 
   if (!courseData) {
-    return <div>Loading Course...</div>; // simple fallback
+    return <div>Loading Course...</div>;
   }
 
   return (
@@ -119,9 +122,9 @@ export default function CoursePlayer() {
                 </AccordionSummary>
 
                 <AccordionDetails sx={{ padding: 0 }}>
-                  {chapter.Videos.map((video, videoIndex) => (
+                  {chapter.Videos.map((video) => (
                     <button
-                      key={videoIndex}
+                      key={video.videoId}
                       className={`flex items-center p-3 mx-2 my-1 rounded cursor-pointer ${activeVideo === video.videoId ? 'bg-blue-50' : 'hover:bg-gray-50'
                         }`}
                       onClick={() => selectVideo(chapterIndex, video.videoId)}
@@ -140,9 +143,9 @@ export default function CoursePlayer() {
                       </div>
                     </button>
                   ))}
-                  {chapter.quizes?.map((quiz, quizIndex) => (
+                  {chapter.quizes?.map((quiz) => (
                     <a
-                      key={quizIndex}
+                      key={quiz.quizId}
                       href={quiz.quizLink}
                       target="_blank"
                       rel="noopener noreferrer"
