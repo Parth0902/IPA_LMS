@@ -4,7 +4,7 @@ import Home from './Pages/Home';
 import Courses from './Pages/Courses';
 import Course from './Pages/Course';
 import Cart from './Pages/Cart';
-import ContactUs from './Pages/ContactUs';
+import ContactUs from './Pages/policy/ContactUs';
 import Login from './Pages/Login';
 import Signup from './Pages/SignUp';
 import ForgotPassword from './Pages/ForgotPassword';
@@ -14,6 +14,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MyLearing from './Pages/MyLearning';
 import MyCourse from './Pages/MyCourse';
+import PrivacyPolicy from './Pages/policy/PrivacyPolicy';
+import TermsAndConditions from './Pages/policy/TermsAndConditions';
+import RefundPolicy from './Pages/policy/RefundPolicy';
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
         <Route path="/courses" element={<Layout><Courses /></Layout>} />
         <Route path="/course/:courseId" element={<Layout><Course /></Layout>} />
         <Route path="/contactUs" element={<Layout><ContactUs /></Layout>} />
+        <Route path="/privacyPolicy" element={<Layout><PrivacyPolicy /></Layout>} />
+        <Route path="/term&Condition" element={<Layout><TermsAndConditions /></Layout>} />
+        <Route path="/refundPolicy" element={<Layout><RefundPolicy /></Layout>} />
       </Routes>
     </BrowserRouter>
   );
