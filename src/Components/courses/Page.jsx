@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CourseCard from './CourseCard';
 
-const Page = ({courses}) => {
+const Page = ({courses, courseDestination}) => {
 
   return (
     <div className="overflow-y-auto flex h-[90vh] w-full px-5 text-gray-600 hide-scrollbar ">
@@ -17,6 +17,7 @@ const Page = ({courses}) => {
                 price={course.coursePrice}
                 guideName={course.rating}
                 courseId={course._id}
+                courseDestination = {courseDestination}
               />
             ))}
           </div>
@@ -33,6 +34,7 @@ Page.propTypes = {
       heading: PropTypes.string,
       coursePrice: PropTypes.number,
       rating: PropTypes.string,
+      courseDestination: PropTypes.string
     })
   ).isRequired,
 };

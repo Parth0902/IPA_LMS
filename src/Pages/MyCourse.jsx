@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Play, CheckCircle, Lock } from 'lucide-react';
-import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
-import { apiService } from '../../services/apiHandler';
-import { useAuth } from '../../Context/AuthContext';
-import { toast } from 'react-toastify';
+import { Play, CheckCircle} from 'lucide-react';
+import { Accordion, AccordionSummary, AccordionDetails} from '@mui/material';
+import { apiService } from '../services/apiHandler';
+import { useAuth } from '../Context/AuthContext';
 import { useParams } from 'react-router-dom';
 
 export default function CoursePlayer() {

@@ -36,7 +36,7 @@ const Navbar = () => {
           </div>
         }
         <div className='hidden flex-1 gap-5 xl:flex  lg:justify-end lg:items-center'>
-          <Link className='font-SubHeading text-lg' to={'/demo'}>Demo</Link>
+          <Link className='font-SubHeading text-lg' to={'/myCourses'}>MyLearing</Link>
           <Link className='font-SubHeading text-lg' to={'/courses'}>Courses</Link>
           <Link className='font-SubHeading text-lg' to={'/contactUs'}>Contact Us</Link>
           <Heart />

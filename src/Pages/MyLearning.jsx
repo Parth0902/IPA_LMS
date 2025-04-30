@@ -19,7 +19,7 @@ const fetchCourses = async ({ pageParam = 1}) => {
   return result;
 };
 
-const Courses = () => {
+const MyLearing = () => {
 
   const [showSideBar, setShowSideBar] = useState(true);
   // Get the token from context
@@ -97,8 +97,7 @@ const Courses = () => {
             <>
               <Page 
               courses={allCourses}
-              courseDestination={"course"}
-              />
+              courseDestination={"myCourses"} />
               <div ref={loadMoreRef} className="flex justify-center py-8">
                 {isFetchingNextPage ? (
                   <span className="text-gray-600 text-sm">Loading more...</span>
@@ -114,4 +113,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default MyLearing;
