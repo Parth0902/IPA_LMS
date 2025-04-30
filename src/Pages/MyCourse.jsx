@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Play, CheckCircle} from 'lucide-react';
-import { Accordion, AccordionSummary, AccordionDetails} from '@mui/material';
+import { Play, CheckCircle } from 'lucide-react';
+import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { apiService } from '../services/apiHandler';
 import { useAuth } from '../Context/AuthContext';
 import { useParams } from 'react-router-dom';
 
 export default function CoursePlayer() {
-  const [courseData, setCourseData] = useState(null); 
+  const [courseData, setCourseData] = useState(null);
   const [activeChapter, setActiveChapter] = useState(0);
   const [activeVideo, setActiveVideo] = useState("");
   const [iframeUrl, setIframeUrl] = useState("");
@@ -16,12 +16,12 @@ export default function CoursePlayer() {
 
   useEffect(() => {
     const fetchCourse = async () => {
-        const response = await apiService({
-          method: 'GET',
-          endpoint: `/getCourseData/680e072b4e541c0b057739bf`,
-          token
-        });
-        setCourseData(response);
+      const response = await apiService({
+        method: 'GET',
+        endpoint: `/getCourseData/680e072b4e541c0b057739bf`,
+        token
+      });
+      setCourseData(response);
     };
     fetchCourse();
   }, [token]);
@@ -122,9 +122,8 @@ export default function CoursePlayer() {
                   {chapter.Videos.map((video, videoIndex) => (
                     <button
                       key={videoIndex}
-                      className={`flex items-center p-3 mx-2 my-1 rounded cursor-pointer ${
-                        activeVideo === video.videoId ? 'bg-blue-50' : 'hover:bg-gray-50'
-                      }`}
+                      className={`flex items-center p-3 mx-2 my-1 rounded cursor-pointer ${activeVideo === video.videoId ? 'bg-blue-50' : 'hover:bg-gray-50'
+                        }`}
                       onClick={() => selectVideo(chapterIndex, video.videoId)}
                     >
                       <div className="mr-3">
@@ -140,6 +139,23 @@ export default function CoursePlayer() {
                         </div>
                       </div>
                     </button>
+                  ))}
+                  {chapter.quizes?.map((quiz, quizIndex) => (
+                    <a
+                      key={quizIndex}
+                      href={quiz.quizLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center p-3 mx-2 my-1 rounded hover:bg-gray-50 border-t border-gray-100"
+                    >
+                      <div className="mr-3">
+                        📝
+                      </div>
+                      <div className="flex-grow text-left">
+                        <p className="text-gray-800 font-medium">{quiz.quizName}</p>
+                        <div className="text-xs text-gray-500">{quiz.quizDuration}</div>
+                      </div>
+                    </a>
                   ))}
                 </AccordionDetails>
               </Accordion>
