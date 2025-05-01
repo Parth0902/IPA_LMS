@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import SideBar from '../Components/courses/SideBar';
 import Page from '../Components/courses/Page';
-import { apiService } from '../services/apiHandler'; // Adjust if needed
+import { useApi } from '../hooks/useApi'; // Adjust if needed
 
 
 
-const fetchCourses = async ({ pageParam = 1}) => {
+const fetchCourses = async ({ pageParam = 1,apiService}) => {
+  
   const result = await apiService({
     method: 'GET',
     endpoint: `/getCourses/${pageParam}`,
@@ -22,6 +23,7 @@ const fetchCourses = async ({ pageParam = 1}) => {
 const Courses = () => {
 
   const [showSideBar, setShowSideBar] = useState(true);
+  const apiService =useApi()
   // Get the token from context
   const loadMoreRef = useRef(null);
 
@@ -34,7 +36,7 @@ const Courses = () => {
     isError,
   } = useInfiniteQuery({
     queryKey: ['courses'],
-    queryFn: ({ pageParam = 1 }) => fetchCourses({ pageParam }),
+    queryFn: ({ pageParam = 1 }) => fetchCourses({ pageParam ,apiService}),
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.totalPages) {
         return lastPage.page + 1;

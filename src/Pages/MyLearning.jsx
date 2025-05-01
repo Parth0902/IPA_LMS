@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import SideBar from '../Components/courses/SideBar';
 import Page from '../Components/courses/Page';
-import { apiService } from '../services/apiHandler';
+import { useApi } from '../hooks/useApi';
 import { useAuth } from '../Context/AuthContext';
 
 const MyLearing = () => {
   const { token } = useAuth();
   const [showSideBar, setShowSideBar] = useState(true);
-
+  const apiService =useApi()
+  
   const {
     data: courseData = [],
     isLoading,

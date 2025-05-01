@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { apiService } from '../services/apiHandler'; 
+import { useApi } from '../hooks/useApi';
 
 const ForgotPassword = () => {
+      const apiService =useApi()
       const [email, setEmail] = useState('');
        const validateForm = () => {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

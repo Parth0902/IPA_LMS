@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Play, CheckCircle } from 'lucide-react';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import { apiService } from '../services/apiHandler';
 import { useAuth } from '../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import { useApi } from '../hooks/useApi';
 
 export default function CoursePlayer() {
 
@@ -15,7 +15,7 @@ export default function CoursePlayer() {
 
   const { token } = useAuth();
   const { courseId } = useParams();
-
+  const apiService =useApi();
   const { data: courseData } = useQuery({
     queryKey: ['courseData'],
     queryFn: async () => {

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 import { toast } from 'react-toastify';
-import { apiService } from '../services/apiHandler'; // adjust path if needed
+// import { apiService } from '../services/apiHandler'; // adjust path if needed
+import { useApi } from '../hooks/useApi';
 
 const Login = () => {
+  const apiService = useApi()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
@@ -31,6 +33,7 @@ const Login = () => {
       data: { email, password },
     });
 
+    console.log(res)
     if (res?.token) {
       login(res.token);
       toast.success('Login successful!');

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { apiService } from '../services/apiHandler'; 
+import { useApi } from '../hooks/useApi';
 
 const ResetPassword = () => {
+  const apiService =useApi()
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { code } = useParams(); // Get token from URL params

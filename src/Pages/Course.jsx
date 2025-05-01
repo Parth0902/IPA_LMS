@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown, IndianRupee } from 'lucide-react';
 import Reviews from '../Components/course/Reviews';
 import { useQuery } from '@tanstack/react-query';
-import { apiService } from '../services/apiHandler';
+import { useApi } from '../hooks/useApi';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Context/AuthContext';
@@ -25,9 +25,9 @@ const StyledAccordionDetails = styled(AccordionDetails)`
 
 const Course = () => {
   const { token } = useAuth();
-  const {addItem} = useCart();
+  const { addItem } = useCart();
   const { courseId } = useParams();
-
+  const apiService = useApi();
   const { data: Data, isLoading, error } = useQuery({
     queryKey: ['courseData', courseId],
     queryFn: async () => {
@@ -91,20 +91,29 @@ const Course = () => {
   return (
     <div className='mt-24'>
       <section className='flex justify-around xl:mx-[120px] py-12'>
-        <div className='w-5/12 bg-slate-700 rounded-xl h-[500px]'>
-          {/* You can put a course thumbnail or preview here */}
+        <div className='w-5/12 h-full'>
+          <img src={courseData.courseThumbNail} alt="" />
+
         </div>
-        <div className='w-5/12'>
-          <h4 className='font-Inter text-[40px] font-semibold pt-5'>{courseData.courseName}</h4>
+        <div className='w-6/12'>
+          <h4 className='font-Inter text-[40px] font-semibold'>{courseData.courseName}</h4>
           <h2 className='font-popins text-[22px] font-normal pt-3'>{courseData.heading}</h2>
-          <p className='font-SubHeading text-[18px] pt-2'>{courseData.courseDescription}</p>
-          <div className='flex flex-col gap-3'>
-            <p className='font-popins text-[20px] pt-4'>Ratings</p>
-            <Rating name="read-only" value={4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
+          <p className='font-SubHeading text-[18px] pt-2 text-justify'>{courseData.courseDescription}</p>
+
+          <div className='flex justify-between items-center pt-4'>
+
+            <div className='flex gap-3 items-center'>
+              <p className='font-popins text-[20px] font-bold'>Price</p>
+              <h2 className='font-popins text-[22px] font-normal flex gap-3 items-center'>
+                <IndianRupee size={18} /> {courseData.coursePrice}
+              </h2>
+            </div>
+
+            <div className='flex gap-3 items-center'>
+              <p className='font-popins text-[20px] font-bold '>Ratings</p>
+              <Rating name="read-only" value={4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
+            </div>
           </div>
-          <h2 className='font-popins text-[22px] font-normal pt-3 flex gap-3 items-center'>
-            <IndianRupee /> {courseData.coursePrice}
-          </h2>
           <button
             className='bg-black text-white mt-5 py-3 px-4 font-Roboto font-medium rounded-lg flex gap-3'
             onClick={handleAddToCart}

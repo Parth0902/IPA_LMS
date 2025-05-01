@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { apiService } from '../services/apiHandler';
+import { useApi } from '../hooks/useApi';
 
 const SignUp = () => {
+  const apiService =useApi()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiService } from '../services/apiHandler';
+import { useApi } from '../hooks/useApi';
 import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
 
@@ -10,7 +10,8 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const { token } = useAuth();
   const queryClient = useQueryClient();
-
+  const apiService =useApi()
+  
   // 1. Fetch Cart
   const { data: cartData, isLoading, isError, refetch } = useQuery({
     queryKey: ['cartData'],
