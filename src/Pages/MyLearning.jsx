@@ -9,7 +9,7 @@ const MyLearing = () => {
   const { token } = useAuth();
   const [showSideBar, setShowSideBar] = useState(true);
   const apiService =useApi()
-  
+
   const {
     data: courseData = [],
     isLoading,
@@ -56,7 +56,7 @@ const MyLearing = () => {
               No courses found.
             </div>
           ) : (
-            <Page courses={courseData} courseDestination="myCourses" />
+            <Page courses={courseData} courseDestination="myCourse" />
           )}
         </div>
       </div>

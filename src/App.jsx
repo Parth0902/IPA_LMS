@@ -27,7 +27,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/cart" element={<Layout><Cart /></Layout>} />
           <Route path="/myCourses" element={<Layout><MyLearing /></Layout>} />
-          <Route path="/myCourses/:courseId" element={<Layout><MyCourse/></Layout>} />
+          <Route path="/myCourse/:courseId" element={<Layout><MyCourse/></Layout>} />
         </Route>
         {/* General routes */}
         <Route path="/reset-password/:code" element={<ResetPassword />} />
