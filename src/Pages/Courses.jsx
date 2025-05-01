@@ -3,7 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import SideBar from '../Components/courses/SideBar';
 import Page from '../Components/courses/Page';
 import { apiService } from '../services/apiHandler'; // Adjust if needed
-const LIMIT = 8; // how many courses per page
+
 
 
 const fetchCourses = async ({ pageParam = 1}) => {

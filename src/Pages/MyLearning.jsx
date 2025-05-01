@@ -1,83 +1,40 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import SideBar from '../Components/courses/SideBar';
 import Page from '../Components/courses/Page';
-import { apiService } from '../services/apiHandler'; // Adjust if needed
-const LIMIT = 8; // how many courses per page
-
-
-const fetchCourses = async ({ pageParam = 1}) => {
-  const result = await apiService({
-    method: 'GET',
-    endpoint: `/getCourses/${pageParam}`,
-
-  });
-
-  if (!result) {
-    throw new Error('Failed to fetch courses');
-  }
-  return result;
-};
+import { apiService } from '../services/apiHandler';
+import { useAuth } from '../Context/AuthContext';
 
 const MyLearing = () => {
-
+  const { token } = useAuth();
   const [showSideBar, setShowSideBar] = useState(true);
-  // Get the token from context
-  const loadMoreRef = useRef(null);
 
   const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
+    data: courseData = [],
     isLoading,
     isError,
-  } = useInfiniteQuery({
-    queryKey: ['courses'],
-    queryFn: ({ pageParam = 1 }) => fetchCourses({ pageParam }),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.page < lastPage.totalPages) {
-        return lastPage.page + 1;
-      }
-      return undefined;
+  } = useQuery({
+    queryKey: ['courseData'],
+    queryFn: async () => {
+      const response = await apiService({
+        method: 'GET',
+        endpoint: `/myCourses`,
+        token,
+      });
+      // Ensure response is valid and contains an array
+      return response;
     },
+    enabled: !!token,
   });
-
-  // Intersection Observer to trigger load more when scrolled to bottom
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasNextPage) {
-          fetchNextPage();
-        }
-      },
-      {
-        threshold: 1.0,
-      }
-    );
-
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
-    }
-
-    return () => {
-      if (loadMoreRef.current) {
-        observer.unobserve(loadMoreRef.current);
-      }
-    };
-  }, [fetchNextPage, hasNextPage]);
-
-  // Combine all pages into a single array
-  const allCourses = data?.pages.flatMap((page) => page.data) || [];
 
   return (
     <div className="flex flex-col mt-24 font-sans relative">
       {!showSideBar && (
         <button
           className="flex items-center cursor-pointer absolute top-5 left-2 border border-gray-300 py-2 rounded-lg px-3"
-          onClick={() => setShowSideBar(!showSideBar)}
+          onClick={() => setShowSideBar(true)}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-funnel-plus-icon lucide-funnel-plus">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-funnel-plus">
             <path d="M13.354 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14v6a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341l1.218-1.348" />
             <path d="M16 6h6" />
             <path d="M19 3v6" />
@@ -93,19 +50,12 @@ const MyLearing = () => {
             <div className="flex justify-center items-center h-[60vh] text-gray-700 text-xl">Loading courses...</div>
           ) : isError ? (
             <div className="flex justify-center items-center h-[60vh] text-red-500 text-xl">Failed to load courses</div>
+          ) : courseData.length === 0 ? (
+            <div className="flex justify-center items-center h-[60vh] text-gray-600 text-lg">
+              No courses found.
+            </div>
           ) : (
-            <>
-              <Page 
-              courses={allCourses}
-              courseDestination={"myCourses"} />
-              <div ref={loadMoreRef} className="flex justify-center py-8">
-                {isFetchingNextPage ? (
-                  <span className="text-gray-600 text-sm">Loading more...</span>
-                ) : !hasNextPage ? (
-                  <span className="text-gray-400 text-sm">No more courses</span>
-                ) : null}
-              </div>
-            </>
+            <Page courses={courseData} courseDestination="myCourses" />
           )}
         </div>
       </div>

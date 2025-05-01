@@ -23,7 +23,7 @@ export const apiService = async ({ method = 'GET', endpoint, token = null, data 
 
     const response = await fetch(`${BASE_URL}${endpoint}`, options);
     const result = await response.json();
-
+    console.log(result)
     if (response.ok) {
       return result;
     } else {
