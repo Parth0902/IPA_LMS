@@ -27,7 +27,7 @@ export const useApi = () => {
       const response = await fetch(`${BASE_URL}${endpoint}`, options);
       const result = await response.json();
       console.log(result)
-      if (response.status === 403) {
+      if (response.status === 401) {
         toast.warn('Your session has expired. Please log in again.');
         logout(); // ✅ Safe here
         return null;
