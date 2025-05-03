@@ -18,21 +18,28 @@ function ContactUs() {
   };
 
   return (
-    <div className="mt-24 px-4 md:px-12">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8">
-        {/* Left Side */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center items-start">
-          <h1 className="text-4xl font-bold text-gray-800 mb-6">Let's Talk</h1>
+    <div className="mt-20 px-4 md:px-8 max-w-6xl mx-auto py-10">
+      <div className="bg-lime-50 rounded-xl shadow-xl flex flex-col md:flex-row overflow-hidden">
+        
+        {/* Left Side - Image with Top-Left Text */}
+        <div className="relative w-full md:w-5/12 h-64 md:h-auto">
           <img
             src={contactUs}
             alt="Contact Us"
-            className="rounded-xl shadow-lg w-full h-auto object-cover"
+            className="w-full h-full object-cover"
           />
+          <div className="absolute top-4 left-4 bg-black bg-opacity-50 p-4 rounded-md">
+            <h1 className="text-white text-xl md:text-2xl font-semibold leading-snug">
+              Big ideas start
+              <br />
+              with a simple hello!
+            </h1>
+          </div>
         </div>
 
-        {/* Right Side */}
-        <div className="w-full md:w-1/2">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Right Side - Form */}
+        <div className="w-full md:w-7/12 p-6 md:p-8 bg-white">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                 Full Name
@@ -40,7 +47,7 @@ function ContactUs() {
               <input
                 type="text"
                 id="fullName"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -54,7 +61,7 @@ function ContactUs() {
               <input
                 type="email"
                 id="email"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -68,7 +75,7 @@ function ContactUs() {
               <input
                 type="tel"
                 id="phoneNumber"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
@@ -80,7 +87,7 @@ function ContactUs() {
               </label>
               <textarea
                 id="projectDescription"
-                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none h-32"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none h-24"
                 value={projectDescription}
                 onChange={(e) => setProjectDescription(e.target.value)}
               />
@@ -88,9 +95,9 @@ function ContactUs() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
-              Send
+              Send Message
             </button>
           </form>
         </div>
