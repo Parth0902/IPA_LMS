@@ -7,7 +7,7 @@ const Testimonials = () => {
     <section className="text-gray-600 body-font py-24">
 
       <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-center text-gray-900">
-        Client Testimonilas
+        Testimonials
       </h1>
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap -m-4">
