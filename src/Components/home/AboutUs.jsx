@@ -30,7 +30,7 @@ const AboutUs = () => {
           </div>
         </div>
         <div class="flex item-center justify-center lg:max-w-lg lg:w-full md:w-1/2 w-5/6 bg-slate-100">
-          <img class="object-cover object-center rounded " alt="hero" src={images} />
+          <img class="object-cover object-center rounded " alt="hero" src='https://IPA-Images.b-cdn.net/Assets/aboutUs.png' />
         </div>
       </div>
     </section>

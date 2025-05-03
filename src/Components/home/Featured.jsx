@@ -12,12 +12,12 @@ const Featured = () => {
       </h1>
       <div className='flex justify-center items-center gap-20 flex-wrap'>
         <div className='flex flex-col gap-2 justify-center items-center h-[170px] w-[170px] border-[0.2rem] border-black rounded-full p-5'>
-          <img src={teacher} alt="" style={{ height: "65px" }} />
+          <img src='https://IPA-Images.b-cdn.net/Assets/Features/teacher.png' alt="" style={{ height: "65px" }} />
           <p className='font-bold text-center text-[18px]'>Expert Faculty</p>
         </div>
-        <img src={caseStudies} alt="" style={{ height: "170px" }} />
-        <img src={certificates} alt="" style={{ height: "170px" }} />
-        <img src={learning} alt="" style={{ height: "170px" }} />
+        <img src='https://IPA-Images.b-cdn.net/Assets/Features/CaseStudies.png' alt="" style={{ height: "170px" }} />
+        <img src='https://IPA-Images.b-cdn.net/Assets/Features/certificates.png' alt="" style={{ height: "170px" }} />
+        <img src='https://IPA-Images.b-cdn.net/Assets/Features/learning.png' alt="" style={{ height: "170px" }} />
       </div>
     </section>
   )
