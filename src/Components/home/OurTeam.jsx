@@ -1,7 +1,7 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
-import data from '../../Assets/faculty/data';
+import data from '../../Assets/staff/data';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
