@@ -2,13 +2,10 @@ import React from 'react';
 
 const RefundPolicy = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 text-gray-800">
+    <div className="max-w-5xl mx-auto px-4 py-10 text-gray-800 mt-24">
       <h1 className="text-3xl font-bold mb-6">Refund & Cancellation Policy</h1>
-
-      <p className="mb-4">Effective Date: [Insert Date]</p>
-
       <p className="mb-4">
-        At [Your Website Name], we are committed to providing high-quality digital learning experiences. Please read our refund and cancellation policy carefully before making a purchase.
+        At IPA Education Academy, we are committed to providing high-quality digital learning experiences. Please read our refund and cancellation policy carefully before making a purchase.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Refund Eligibility</h2>
@@ -27,7 +24,7 @@ const RefundPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Refund Window & Process</h2>
       <p className="mb-4">
-        Refund requests must be made within <strong>7 days</strong> of purchase. Send your request to <a href="mailto:support@example.com" className="text-blue-600 underline">support@example.com</a> with your order ID and reason.
+        Refund requests must be made within <strong>7 days</strong> of purchase. Send your request to <a href="mailto:ipaedutech@gmail.com" className="text-blue-600 underline">ipaedutech@gmail.com</a> with your order ID and reason.
         Approved refunds will be processed through Razorpay within 7–10 business days.
       </p>
 

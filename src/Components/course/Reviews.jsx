@@ -26,20 +26,12 @@ const Reviews = () => {
             </div>
           ))}
         </div>
-
-        {/* CTA */}
-        <div className="flex flex-col items-center gap-4 pt-6">
-          <p className="text-center text-gray-600 font-medium">Share your thoughts with others</p>
-          <button className="border-2 border-black text-black w-full py-3 rounded-md font-semibold hover:bg-black hover:text-white transition-all duration-300">
-            Write a Review
-          </button>
-        </div>
       </div>
 
       {/* Right Section */}
       <div className="w-full lg:w-[55%] space-y-6 h-[600px] overflow-y-auto">
         <div className="space-y-6">
-          {[1, 2,3,4,5].map((item) => (
+          {[1, 2, 3, 4, 5].map((item) => (
             <div
               key={item}
               className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-4"

@@ -2,12 +2,9 @@ import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10 text-gray-800">
-      <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
-
-      <p className="mb-4">Effective Date: [Insert Date]</p>
-
-      <p className="mb-4">[Your Website Name] is committed to protecting your privacy. This policy explains how we collect and use your data.</p>
+    <div className="max-w-5xl mx-auto px-4 py-10 text-gray-800 mt-24">
+      <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
+      <p className="mb-4">IPA Education Academy is committed to protecting your privacy. This policy explains how we collect and use your data.</p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">1. Information We Collect</h2>
       <ul className="list-disc pl-6 mb-4">
@@ -41,7 +38,7 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">7. Contact</h2>
       <p>
-        For privacy questions, contact <a href="mailto:support@example.com" className="text-blue-600 underline">support@example.com</a>.
+        For privacy questions, contact <a href="mailto:ipaedutech@gmail.com" className="text-blue-600 underline">ipaedutech@gmail.com</a>.
       </p>
     </div>
   );
