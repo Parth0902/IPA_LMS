@@ -2,7 +2,7 @@ import React from 'react'
 
 const TredingCourses = () => {
     return (
-        <section class="text-gray-600 body-font">
+        <section class="text-gray-600 body-font pt-12">
             <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-center text-gray-900">
                 Trending Cources
             </h1>

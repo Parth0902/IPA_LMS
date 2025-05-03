@@ -10,11 +10,10 @@ const CourseCard = ({ image, title, topic, price, guideName,courseId, courseDest
           <img alt={title} src={image} className="w-full h-full object-cover" />
         </div>
         <div className="p-4">
-          <h2 className="text-lg font-semibold text-gray-800 mb-1">{title}</h2> {/* Course Name */}
+          <h2 className="text-lg font-semibold text-gray-800 mb-1 truncate">{title}</h2> {/* Course Name */}
           <div className="flex justify-between">
-              <p className="text-sm text-gray-500 mb-1">Topic: {topic}</p> {/* Topic */}
-
-              <p className="text-sm text-gray-500">Guide: {guideName}</p>
+              <p className="text-sm text-gray-500 mb-1 max-w-[70%] truncate">Topic: {topic}</p> {/* Topic */}
+              <p className="text-sm text-gray-500 max-w-[25%]">Guide: {guideName}</p>
           </div>
           <p className="text-sm text-gray-700 mb-1">Price: {price}</p> {/* Guide Name */}
         </div>
