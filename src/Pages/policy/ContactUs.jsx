@@ -39,6 +39,7 @@ function ContactUs() {
 
         {/* Right Side - Form */}
         <div className="w-full md:w-7/12 p-6 md:p-8 bg-white">
+        <h1 className='font-semibold text-2xl pb-8'> Contact Us </h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">

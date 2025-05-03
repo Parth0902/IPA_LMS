@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import data from '../../Assets/staff/data';
@@ -6,13 +6,6 @@ import data from '../../Assets/staff/data';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import '../../App.css';
-
-
-const teamMembers = Array.from({ length: 18 }, (_, i) => ({
-    name: data.names[i],
-    role: data.roles[i],
-    img: data.images[i]
-}));
 
 const OurTeam = () => {
     return (
@@ -35,7 +28,7 @@ const OurTeam = () => {
                     1280: { slidesPerView: 4 },
                 }}
             >
-                {teamMembers.map((member, index) => (
+                {data.map((member, index) => (
                     <SwiperSlide key={index}>
                         <div className="bg-white rounded-lg overflow-hidden flex flex-col justify-center items-center shadow-md">
                             <img
@@ -52,7 +45,7 @@ const OurTeam = () => {
                 ))}
             </Swiper>
         </section>
-    )
-}
+    );
+};
 
-export default OurTeam
+export default OurTeam;

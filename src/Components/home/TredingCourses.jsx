@@ -4,7 +4,7 @@ const TredingCourses = () => {
     return (
         <section class="text-gray-600 body-font pt-12">
             <h1 class="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-center text-gray-900">
-                Trending Cources
+                Trending Courses
             </h1>
             <div class="container px-5 py-24 mx-auto">
                 <div class="flex flex-wrap w-full mb-20">
