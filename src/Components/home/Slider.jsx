@@ -25,16 +25,16 @@ export default function Silder() {
 
       >
         <SwiperSlide className='w-full h-full bg-black'>
-          <img alt='slider1' src='src/Assets/slider/slider1.png' className='object-cover' />
+          <img alt='slider1' src='https://IPA-Images.b-cdn.net/Assets/slider/slider1.png' className='object-cover' />
         </SwiperSlide>
         <SwiperSlide className='w-full h-full bg-black'>
-          <img alt='slider2' src='src/Assets/slider/slider2.png' className='object-cover' />
+          <img alt='slider2' src='https://IPA-Images.b-cdn.net/Assets/slider/slider2.png' className='object-cover' />
         </SwiperSlide>
         <SwiperSlide className='w-full h-full bg-black'>
-          <img alt='slider3' src='src/Assets/slider/slider33.png' className='object-cover'/>
+          <img alt='slider3' src='https://IPA-Images.b-cdn.net/Assets/slider/slider3.png' className='object-cover'/>
         </SwiperSlide>
         <SwiperSlide className='w-full h-full bg-black flex justify-center'>
-          <img alt='slider4' src='src/Assets/slider/slider4 (1).png' className='object-contain'/>
+          <img alt='slider4' src='https://IPA-Images.b-cdn.net/Assets/slider/slider4.png' className='object-contain'/>
         </SwiperSlide>
       </Swiper>
     </div>

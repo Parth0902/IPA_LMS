@@ -1,5 +1,4 @@
 import React from 'react'
-import labs from '../../Assets/Features/labs.png'
 import certificates from '../../Assets/Features/certificates.png'
 import caseStudies from '../../Assets/Features/CaseStudies.png'
 import learning from '../../Assets/Features/learning.png'
