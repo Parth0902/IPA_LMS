@@ -96,9 +96,9 @@ const Login = () => {
       </div>
 
       {/* Right panel - image */}
-      <div className="hidden md:flex w-1/2 items-center justify-center bg-black relative">
+      <div className="hidden md:flex w-1/2 items-center justify-center relative">
         <img
-          src="https://IPA-Images.b-cdn.net/Assets/login.webp" // You can replace this with your own local or external image
+          src="https://IPA-Images.b-cdn.net/Assets/login.webp" 
           alt="Welcome"
           className="w-full h-full object-cover"
         />

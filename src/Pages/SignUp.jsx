@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useApi } from '../hooks/useApi';
 
 const SignUp = () => {
-  const apiService =useApi()
+  const apiService = useApi()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,7 +19,7 @@ const SignUp = () => {
       return false;
     }
 
-    if (Name.length ===0) {
+    if (Name.length === 0) {
       toast.warn('Name is can not be empty');
       return false;
     }
@@ -43,7 +43,7 @@ const SignUp = () => {
     const res = await apiService({
       method: 'POST',
       endpoint: '/signup',
-      data: { name:Name, email, password },
+      data: { name: Name, email, password },
     });
 
     if (res) {
@@ -53,73 +53,89 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1">Name</label>
-            <input
-              id="Name"
-              type="text"
-              placeholder="Name"
-              value={Name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">Confirm Password</label>
-            <input
-              id="confirmPassword"
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800"
-              required
-            />
+    <div className="flex min-h-screen">
+      <div className="w-full md:w-1/2 flex items-center justify-center px-6 bg-white">
+        <div className="w-full max-w-md">
+
+          <div className="mb-12">
+            <div className="text-2xl font-bold mb-5 flex items-center gap-2">
+              <img alt='logo' src='https://IPA-Images.b-cdn.net/Assets/logo.png' className='h-10' />
+              <h1>IPA EDUCATION ACADEMY</h1>
+            </div>
+            <p className="text-gray-700 text-sm">Sign Up to IPA Education Academy</p>
+            <p className="text-gray-500 text-xs">The faster you sign up, the faster we get to work.</p>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-md transition duration-200"
-          >
-            Sign Up
-          </button>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <input
+                id="Name"
+                type="text"
+                placeholder="Name"
+                value={Name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black"
+                required
+              />
+            </div>
+            <div>
+              <input
+                id="email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black"
+                required
+              />
+            </div>
+            <div>
+              <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black"
+                required
+              />
+            </div>
+            <div>
+              <input
+                id="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black"
+                required
+              />
+            </div>
 
-          <div className="text-start mt-4 text-gray-500 px-1">
-            Already have an account?{' '}
-            <Link to="/login" className="text-blue-600 hover:underline">
-              Login here
-            </Link>
-          </div>
-        </form>
+            <button
+              type="submit"
+              className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition"
+            >
+              Sign Up
+            </button>
+
+            <div className="text-center text-sm text-gray-500 mt-2">
+              Already have an account?{' '}
+              <Link to="/login" className="text-black font-medium hover:underline">Login</Link>
+            </div>
+          </form>
+        </div>
+      </div>
+      {/* Right panel - image */}
+      <div className="hidden md:flex w-1/2 items-center justify-center bg-black relative">
+        <img
+          src="https://IPA-Images.b-cdn.net/Assets/login.webp"
+          alt="Welcome"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+          <h1 className="text-white text-4xl font-bold text-center">Welcome Back!</h1>
+        </div>
       </div>
     </div>
   );
