@@ -50,7 +50,7 @@ const Navbar = () => {
               <ShoppingCart />
             </Link>
           </Badge>
-          <div className='hidden lg:flex gap-3'>
+          <div className='flex gap-3 items-center'>
             <div className='bg-grey-400 rounded-lg'>
               <UserRound />
             </div>
