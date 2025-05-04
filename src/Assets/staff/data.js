@@ -1,6 +1,7 @@
 const data = [
   { name: "Dr. APS Suri", role: "National President, IPA", img: "https://IPA-Images.b-cdn.net/Assets/staff/1_APS_Suri.png" },
   { name: "Dr. G. Arun Maiya", role: "President Karnataka, IPA", img: "https://IPA-Images.b-cdn.net/Assets/staff/2_Maiya.png" },
+  { name: "Dr. Sandeep Suri", role: "President Haryana", img: "https://IPA-Images.b-cdn.net/Assets/staff/Sandeep_Suri.jpg" },
   { name: "Dr. Rajnish Saxena", role: "National Secretary, IPA", img: "https://IPA-Images.b-cdn.net/Assets/staff/4_Rajnish.png" },
   { name: "Dr. Manishkumar Jangam", role: "National Cordinator, IPA", img: "https://IPA-Images.b-cdn.net/Assets/staff/5_Manishkumar.png" },
   { name: "Dr. Gurleen Suri", role: "Pod Surgeon UK.,Joint Sec. IPA", img: "https://IPA-Images.b-cdn.net/Assets/staff/6_Gurleen_Suri.png" },
@@ -14,9 +15,9 @@ const data = [
   { name: "Dr. Pallavi Singh", role: "Mumbai", img: "https://IPA-Images.b-cdn.net/Assets/staff/14_Pallavi.png" },
   { name: "Dr. Ashish Dengra", role: "VP of MP Chapter IPA", img: "https://IPA-Images.b-cdn.net/Assets/staff/15_Ashish_Dengra.png" },
   { name: "Dr. Ravi Kamipalli", role: "Vice President of IPA, USA", img: "https://IPA-Images.b-cdn.net/Assets/staff/16_Ravi_KAM.png" },
-  { name: "Dr. Amit Kumar", role: "", img: "https://IPA-Images.b-cdn.net/Assets/staff/17_Amit_Kumar.png" },
+  { name: "Dr. Amit Kumar", role: "Secretary of Kerala Chapter", img: "https://IPA-Images.b-cdn.net/Assets/staff/17_Amit_Kumar.png" },
   { name: "Dr. Megha Nataraj", role: "Manipal University", img: "https://IPA-Images.b-cdn.net/Assets/staff/18_Megha.png" },
-  { name: "Dr. Sandeep Suri", role: "President Haryana", img: "https://images.unsplash.com/photo-1589571894960-20bbe2828a27?auto=format&fit=crop&w=1171&q=80" }
+  { name: "Dr. Rajiv Kovil", role: "Vice President Maharashtra, IPA", img: "https://IPA-Images.b-cdn.net/Assets/staff/Rajiv_Kovil.jpg" }
 ];
 
 export default data;
