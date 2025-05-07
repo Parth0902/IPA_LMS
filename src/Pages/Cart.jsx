@@ -17,7 +17,7 @@ export default function Cart() {
 
   if (isLoading) {
     return (
-      <div>
+      <div className='mt-24'>
         <h1>Loading....</h1>
       </div>
     )

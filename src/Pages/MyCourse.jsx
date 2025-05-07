@@ -5,6 +5,7 @@ import { useAuth } from '../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
+import GiveReview from '../Components/course/GiveReview';
 
 export default function CoursePlayer() {
   const [activeChapter, setActiveChapter] = useState(0);
@@ -175,6 +176,13 @@ export default function CoursePlayer() {
           ))}
         </div>
       </div>
+
+      {/* Review section */}
+      <GiveReview
+        couresId ={courseId}
+        token={token}
+      />
+
     </div>
   );
 }

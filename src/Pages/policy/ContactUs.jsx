@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
 import contactUs from '../../Assets/contact.png';
+import { useApi } from '../../hooks/useApi';
+import { toast } from 'react-toastify';
 
 function ContactUs() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
+  const apiService = useApi();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Form submitted:', {
-      name,
-      email,
-      phoneNumber,
-      projectDescription,
+    const response = apiService({
+      method: 'POST',
+      endpoint: '/contact',
+      data: {
+        name,
+        email,
+        phone : phoneNumber,
+        message : projectDescription,
+      },
     });
+    toast.success(response.message);
+    setName('');
+    setEmail('');
+    setPhoneNumber('');
+    setProjectDescription('');
   };
 
   return (
     <div className="mt-20 px-4 md:px-8 max-w-6xl mx-auto py-10">
       <div className="bg-lime-50 rounded-xl shadow-xl flex flex-col md:flex-row overflow-hidden">
-        
+
         {/* Left Side - Image with Top-Left Text */}
         <div className="relative w-full md:w-5/12 h-64 md:h-auto">
           <img
@@ -39,7 +51,7 @@ function ContactUs() {
 
         {/* Right Side - Form */}
         <div className="w-full md:w-7/12 p-6 md:p-8 bg-white">
-        <h1 className='font-semibold text-2xl pb-8'> Contact Us </h1>
+          <h1 className='font-semibold text-2xl pb-8'> Contact Us </h1>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
