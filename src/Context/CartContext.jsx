@@ -10,8 +10,8 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const { token } = useAuth();
   const queryClient = useQueryClient();
-  const apiService =useApi()
-  
+  const apiService = useApi()
+
   // 1. Fetch Cart
   const { data: cartData, isLoading, isError, refetch } = useQuery({
     queryKey: ['cartData'],
@@ -31,6 +31,8 @@ export const CartProvider = ({ children }) => {
       return transformedCart;
     },
     enabled: !!token,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   // 2. Add Item

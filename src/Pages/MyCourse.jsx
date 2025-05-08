@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Play, CheckCircle } from 'lucide-react';
-import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from '@mui/material';
 import { useAuth } from '../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
@@ -9,35 +13,34 @@ import GiveReview from '../Components/course/GiveReview';
 
 export default function CoursePlayer() {
   const [activeChapter, setActiveChapter] = useState(0);
-  const [activeVideo, setActiveVideo] = useState("");
-  const [iframeUrl, setIframeUrl] = useState("");
+  const [activeVideo, setActiveVideo] = useState('');
+  const [iframeUrl, setIframeUrl] = useState('');
   const { token } = useAuth();
   const { courseId } = useParams();
   const apiService = useApi();
 
+  console.log('courseId:', courseId, 'type:', typeof courseId);
+
+
   const {
     data: courseData,
     refetch,
-    isFetching
+    isFetching,
   } = useQuery({
     queryKey: ['courseData'],
     queryFn: async () => {
       const response = await apiService({
         method: 'GET',
         endpoint: `getVideos/${courseId}`,
-        token
+        token,
       });
-      console.log("Response ", response);
       return response;
     },
-    enabled: !!token, 
+    enabled: !!token,
   });
 
-  // Refetch when token is available
   useEffect(() => {
-    if (token) {
-      refetch();
-    }
+    if (token) refetch();
   }, [token, refetch]);
 
   const selectVideo = async (chapterIndex, videoId) => {
@@ -54,66 +57,72 @@ export default function CoursePlayer() {
   };
 
   if (!courseData || isFetching) {
-    return <div>Loading Course...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="text-lg font-semibold">Loading Course...</span>
+      </div>
+    );
   }
 
   const features = courseData.courseData?.Features || {};
+  const currentVideo =
+    courseData.chapters[activeChapter]?.Videos.find(
+      (v) => v.videoId === activeVideo
+    ) || {};
 
   return (
-    <div className="flex h-screen bg-gray-100 mt-24">
-      {/* Video Player Section */}
-      <div className="w-2/3 flex flex-col p-6 aspect-video">
-        <div className="relative h-3/4 bg-black">
-          {iframeUrl ? (
-            <iframe
-              title="Video"
-              src={iframeUrl}
-              className="w-full h-full"
-              allow="autoplay fullscreen"
-              allowFullScreen
-              loading="lazy"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 text-white">
-              Loading video...
-            </div>
-          )}
-        </div>
+    <div className="flex flex-col">
+      <div className="flex flex-col lg:flex-row h-screen mt-24 bg-gray-100">
+        {/* Video Player */}
+        <div className="lg:w-2/3 w-full p-6">
+          <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow">
+            {iframeUrl ? (
+              <iframe
+                title="Course Video"
+                src={iframeUrl}
+                className="w-full h-full"
+                allow="autoplay fullscreen"
+                allowFullScreen
+                loading="lazy"
+              />
+            ) : (
+              <div className="flex items-center justify-center h-full text-white">
+                Loading video...
+              </div>
+            )}
+          </div>
 
-        {/* Video Description */}
-        <div className="p-6 bg-white flex-grow">
-          <h2 className="text-2xl font-bold mb-2">
-            {courseData.chapters[activeChapter]?.Videos.find(v => v.videoId === activeVideo)?.videoName || "Video Title"}
-          </h2>
-          <p className="text-gray-600 mb-4">
-            {courseData.chapters[activeChapter]?.Videos.find(v => v.videoId === activeVideo)?.videoDescription || "Video description will appear here"}
-          </p>
-          <div className="flex items-center text-sm text-gray-500">
-            <span className="mr-4">
-              Duration: {courseData.chapters[activeChapter]?.Videos.find(v => v.videoId === activeVideo)?.videoDuration || "N/A"}
-            </span>
+          {/* Video Details */}
+          <div className="mt-4 bg-white p-6 rounded-lg shadow">
+            <h2 className="text-2xl font-bold mb-2">
+              {currentVideo.videoName || 'Video Title'}
+            </h2>
+            <p className="text-gray-600 mb-2">
+              {currentVideo.videoDescription || 'Video description will appear here.'}
+            </p>
+            <p className="text-sm text-gray-500">
+              Duration: {currentVideo.videoDuration || 'N/A'}
+            </p>
           </div>
         </div>
-      </div>
 
-      {/* Course Content Section */}
-      <div className="w-1/3 bg-white overflow-y-auto border-l border-gray-200">
-        <div className="p-4 border-b border-gray-200 top-0 bg-white z-10">
-          <h2 className="text-xl font-bold">Course Content</h2>
-          <p className="text-sm text-gray-500">
-            {features.chapters} chapters • {features.quizes} quizzes • {features.watchTime} hours total
-          </p>
-        </div>
+        {/* Sidebar Course Content */}
+        <aside className="lg:w-1/3 w-full bg-white border-l overflow-y-auto p-6 max-h-[90vh]">
+          <div className="mb-4 sticky top-0 bg-white z-10 pb-2 border-b">
+            <h2 className="text-xl font-bold">Course Content</h2>
+            <p className="text-sm text-gray-500">
+              {features.chapters} chapters • {features.quizes} quizzes •{' '}
+              {features.watchTime} hours total
+            </p>
+          </div>
 
-        {/* Course Modules Accordion */}
-        <div className="pb-16">
-          {courseData.chapters.map((chapter, chapterIndex) => (
-            <div key={chapter._id}>
+          <div className="space-y-4">
+            {courseData.chapters.map((chapter, chapterIndex) => (
               <Accordion
+                key={chapter._id}
                 disableGutters
                 elevation={0}
                 sx={{
-                  border: 'none',
                   boxShadow: 'none',
                   '&:before': { display: 'none' },
                 }}
@@ -123,14 +132,14 @@ export default function CoursePlayer() {
                   aria-controls={`panel${chapterIndex}-content`}
                   id={`panel${chapterIndex}-header`}
                   sx={{
-                    padding: '16px',
+                    padding: '12px 16px',
                     borderBottom: '1px solid #eee',
                     '&:hover': { backgroundColor: '#f9fafb' },
                   }}
                 >
-                  <div className="w-full">
+                  <div>
                     <h3 className="font-semibold">{chapter.ModuleName}</h3>
-                    <p className="text-sm text-gray-500">{chapter.ModuleDuration}</p>
+                    <p className="text-xs text-gray-500">{chapter.ModuleDuration}</p>
                   </div>
                 </AccordionSummary>
 
@@ -138,16 +147,19 @@ export default function CoursePlayer() {
                   {chapter.Videos.map((video) => (
                     <button
                       key={video.videoId}
-                      className={`flex items-center p-3 mx-2 my-1 rounded cursor-pointer ${activeVideo === video.videoId ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
                       onClick={() => selectVideo(chapterIndex, video.videoId)}
+                      className={`w-full text-left flex items-start gap-3 p-3 mx-2 my-1 rounded-md transition ${
+                        activeVideo === video.videoId
+                          ? 'bg-blue-50 text-blue-600 font-medium'
+                          : 'hover:bg-gray-50 text-gray-700'
+                      }`}
                     >
-                      <div className="mr-3">
-                        <CheckCircle size={18} className="text-green-500" />
-                      </div>
-                      <div className="flex-grow text-left">
-                        <p className={`${activeVideo === video.videoId ? 'text-blue-600 font-medium' : 'text-gray-700'}`}>
-                          {video.videoName}
-                        </p>
+                      <CheckCircle
+                        size={18}
+                        className="text-green-500 mt-1 shrink-0"
+                      />
+                      <div className="flex flex-col text-sm">
+                        <span>{video.videoName}</span>
                         <div className="flex items-center text-xs text-gray-500 mt-1">
                           <Play size={12} className="mr-1" />
                           <span>{video.videoDuration}</span>
@@ -155,34 +167,33 @@ export default function CoursePlayer() {
                       </div>
                     </button>
                   ))}
+
                   {chapter.quizes?.map((quiz) => (
                     <a
                       key={quiz.quizId}
                       href={quiz.quizLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center p-3 mx-2 my-1 rounded hover:bg-gray-50 border-t border-gray-100"
+                      className="flex items-start p-3 mx-2 my-1 rounded-md border-t border-gray-100 hover:bg-gray-50"
                     >
-                      <div className="mr-3">📝</div>
-                      <div className="flex-grow text-left">
-                        <p className="text-gray-800 font-medium">{quiz.quizName}</p>
-                        <div className="text-xs text-gray-500">{quiz.quizDuration}</div>
+                      <span className="mr-3">📝</span>
+                      <div className="text-sm">
+                        <p className="font-medium text-gray-800">{quiz.quizName}</p>
+                        <p className="text-xs text-gray-500">{quiz.quizDuration}</p>
                       </div>
                     </a>
                   ))}
                 </AccordionDetails>
               </Accordion>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </aside>
       </div>
 
-      {/* Review section */}
-      <GiveReview
-        couresId ={courseId}
-        token={token}
-      />
-
+      {/* Review Section */}
+      <div className="bg-white py-8 px-6">
+        <GiveReview courseId={courseId} token={token} />
+      </div>
     </div>
   );
 }
