@@ -183,7 +183,6 @@ const Course = () => {
         </div>
       </section>
 
-
       <section className='xl:px-[120px] pb-12 flex justify-center flex-col gap-2 items-center'>
         <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center pb-10'>Chapters of this course</h2>
         {chapters.map((chapter) => (
@@ -201,6 +200,8 @@ const Course = () => {
             <Divider />
             <StyledAccordionDetails>
               <ul className='list-disc'>
+                <p className='font-popins text-[18px] font-medium px-10 py-4'>Module Objective</p>
+                <p className='font-Inter text-[16px] font-normal px-10 pb-4'>{chapter.ModuleDescription}</p>
                 <h4 className='font-bold font-popins text-[18px] py-4 px-10 mb-5 bg-slate-300'>Videos</h4>
                 {chapter.Videos.map((content, index) => (
                   <li key={index} className='flex w-full justify-between items-center px-10'>
