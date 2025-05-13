@@ -92,6 +92,34 @@ const Course = () => {
     }
   ];
 
+  const objectives = [
+    {
+      heading: "Understand the Purpose of the FDFM Course",
+      text: "Explain the objectives, scope, and significance of the course in diabetic foot management.",
+    },
+    {
+      heading: "Recognize the Need for Specialized Training",
+      text: "Identify the challenges and global burden of diabetic foot complications, with a focus on improving patient outcomes.",
+    },
+    {
+      heading: "Outline the Course Structure",
+      text: "Describe the key topics covered in the FDFM course, including anatomy, biomechanics, neuropathy, vascular complications, and wound care.",
+    },
+    {
+      heading: "Appreciate the Multidisciplinary Approach",
+      text: "Understand the collaborative role of different healthcare professionals in preventing, diagnosing, and managing diabetic foot conditions.",
+    },
+    {
+      heading: "Identify Key Anatomical Structures",
+      text: "Describe the bones, joints, muscles, tendons, and ligaments of the foot.",
+    },
+    {
+      heading: "Understand the Vascular and Nervous Supply",
+      text: "Explain the arterial, venous, and nerve supply of the foot and their clinical relevance.",
+    },
+  ];
+
+
   return (
     <div className='mt-24'>
       <section className='flex justify-around xl:mx-[120px] py-12'>
@@ -139,6 +167,22 @@ const Course = () => {
           ))}
         </div>
       </section>
+
+      <section className="xl:px-[120px]">
+        <h2 className="font-Inter text-[40px] font-semibold pt-5 text-center">Objectives of this course</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12">
+          {objectives.map((objective, index) => (
+            <div
+              key={index}
+              className="bg-white shadow-md rounded-2xl p-6 flex flex-col gap-3 transition-transform hover:scale-[1.02]"
+            >
+              <h3 className="text-[20px] font-semibold text-gray-800">{objective.heading}</h3>
+              <p className="text-[16px] font-normal text-gray-600 leading-relaxed">{objective.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
 
       <section className='xl:px-[120px] pb-12 flex justify-center flex-col gap-2 items-center'>
         <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center pb-10'>Chapters of this course</h2>
