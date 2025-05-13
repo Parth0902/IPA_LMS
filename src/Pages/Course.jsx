@@ -28,6 +28,7 @@ const Course = () => {
   const { addItem } = useCart();
   const { courseId } = useParams();
   const apiService = useApi();
+
   const { data: Data, isLoading, error } = useQuery({
     queryKey: ['courseData', courseId],
     queryFn: async () => {
@@ -60,32 +61,35 @@ const Course = () => {
   }
 
   const { courseData, chapters } = Data;
+  const watchTime = courseData?.Features?.watchTime || '0h 0m';
+  const totalChapters = courseData?.Features?.chapters || 0;
+  const totalQuizzes = courseData?.Features?.quizes || 0;
 
   const Features = [
     {
       icon: <Video size={36} />,
-      text: `Total watch Time of ${courseData?.Features?.watchTime}`
+      text: `Total watch Time of ${watchTime}`,
     },
     {
       icon: <BookMarked size={36} />,
-      text: `${courseData?.Features?.chapters} total chapters`
+      text: `${totalChapters} total chapters`,
     },
     {
       icon: <Newspaper size={36} />,
-      text: `Chapter Wise Notes`
+      text: "Chapter Wise Notes",
     },
     {
       icon: <NotebookPen size={36} />,
-      text: `${courseData?.Features?.quizes} Total Quizes`
+      text: `${totalQuizzes} Total Quizzes`,
     },
     {
       icon: <Trophy size={36} />,
-      text: `Certificate of Completion`
+      text: "Certificate of Completion",
     },
     {
       icon: <Infinity size={36} />,
-      text: `Lifetime access to course material`
-    },
+      text: "Lifetime access to course material",
+    }
   ];
 
   return (
@@ -111,7 +115,7 @@ const Course = () => {
 
             <div className='flex gap-3 items-center'>
               <p className='font-popins text-[20px] font-bold '>Ratings</p>
-              <Rating name="read-only" value={4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
+              <Rating name="read-only" value={courseData.rating || 4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
             </div>
           </div>
           <button

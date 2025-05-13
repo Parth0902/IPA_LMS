@@ -1,5 +1,6 @@
-import { TextField, Button, Box, Typography, Rating } from '@mui/material';
+import { TextField, Button, Typography, Rating } from '@mui/material';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useApi } from '../../hooks/useApi';
 
 const GiveReview = ({ courseId, token }) => {
@@ -8,9 +9,6 @@ const GiveReview = ({ courseId, token }) => {
   const apiService = useApi();
 
   const handleSubmit = () => {
-
-    console.log('courseId:', courseId, 'type:', typeof courseId);
-
     apiService({
       method: 'POST',
       endpoint: '/addReview',
@@ -25,12 +23,13 @@ const GiveReview = ({ courseId, token }) => {
 
   return (
     <div>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, maxWidth: 400, margin: 'auto' }}>
+      <div className='flex flex-col gap-2'>
         <Typography variant="h6">Give Your Review</Typography>
         <Rating
           name="rating"
           value={rating}
           onChange={(event, newValue) => setRating(newValue)}
+          sx={{ fontSize: '2rem', color: 'gold' }}
         />
         <TextField
           label="Comment"
@@ -43,9 +42,14 @@ const GiveReview = ({ courseId, token }) => {
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Submit
         </Button>
-      </Box>
+      </div>
     </div>
   )
 }
+
+GiveReview.propTypes = {
+  courseId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 export default GiveReview;

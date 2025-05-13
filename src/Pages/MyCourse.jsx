@@ -72,7 +72,7 @@ export default function CoursePlayer() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col lg:flex-row h-screen mt-24 bg-gray-100">
+      <div className="flex flex-col lg:flex-row min-h-screen mt-24 bg-gray-100">
         {/* Video Player */}
         <div className="lg:w-2/3 w-full p-6">
           <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow">
@@ -104,11 +104,15 @@ export default function CoursePlayer() {
               Duration: {currentVideo.videoDuration || 'N/A'}
             </p>
           </div>
+          {/* Review Section */}
+          <div className="bg-white w-full py-8 px-6">
+            <GiveReview courseId={courseId} token={token} />
+          </div>
         </div>
 
         {/* Sidebar Course Content */}
-        <aside className="lg:w-1/3 w-full bg-white border-l overflow-y-auto p-6 max-h-[90vh]">
-          <div className="mb-4 sticky top-0 bg-white z-10 pb-2 border-b">
+        <aside className="lg:w-1/3 w-full bg-white border-l px-6 sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto mb-6">
+          <div className="sticky top-0 py-6 bg-white z-10 border-b">
             <h2 className="text-xl font-bold">Course Content</h2>
             <p className="text-sm text-gray-500">
               {features.chapters} chapters • {features.quizes} quizzes •{' '}
@@ -148,11 +152,10 @@ export default function CoursePlayer() {
                     <button
                       key={video.videoId}
                       onClick={() => selectVideo(chapterIndex, video.videoId)}
-                      className={`w-full text-left flex items-start gap-3 p-3 mx-2 my-1 rounded-md transition ${
-                        activeVideo === video.videoId
-                          ? 'bg-blue-50 text-blue-600 font-medium'
-                          : 'hover:bg-gray-50 text-gray-700'
-                      }`}
+                      className={`w-full text-left flex items-start gap-3 p-3 mx-2 my-1 rounded-md transition ${activeVideo === video.videoId
+                        ? 'bg-blue-50 text-blue-600 font-medium'
+                        : 'hover:bg-gray-50 text-gray-700'
+                        }`}
                     >
                       <CheckCircle
                         size={18}
@@ -190,10 +193,6 @@ export default function CoursePlayer() {
         </aside>
       </div>
 
-      {/* Review Section */}
-      <div className="bg-white py-8 px-6">
-        <GiveReview courseId={courseId} token={token} />
-      </div>
     </div>
   );
 }
