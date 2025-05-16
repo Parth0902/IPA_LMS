@@ -3,7 +3,7 @@ import communication from '../Assets/social/communication.png';
 import facebook from '../Assets/social/facebook.png';
 import instagram from '../Assets/social/instagram.png';
 import linkedin from '../Assets/social/linkedin.png';
-
+import Logo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -12,9 +12,10 @@ const Footer = () => {
       <div className='flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white px-8 md:px-16'>
 
         {/* Left Section - Logo and Description */}
-        <div className='flex flex-col gap-4 md:w-2/3'>
+        <div className='flex flex-col gap-4 w-1/3'>
+          <img src="https://IPA-Images.b-cdn.net/Assets/aboutUs.png" alt="" className='h-16 w-16' />
           <h1 className='font-Heading text-2xl text-white'>IPA EDUCATION ACADEMY</h1>
-          <p className='text-white'>
+          <p className='text-white text-justify'>
             Indian Podiatry Association is the largest Indian professional body for FootCare specialists.
             It was registered under the Societies Registration Act, XXI of 1860 by the Registrar of Societies,
             Delhi Administration vide dated April 4, 2010 at Delhi.

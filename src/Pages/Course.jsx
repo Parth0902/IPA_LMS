@@ -61,22 +61,22 @@ const Course = () => {
   }
 
   const { courseData, chapters } = Data;
-  const watchTime = courseData?.Features?.watchTime || '0h 0m';
+  // const watchTime = courseData?.Features?.watchTime || '0h 0m';
   const totalChapters = courseData?.Features?.chapters || 0;
   const totalQuizzes = courseData?.Features?.quizes || 0;
 
-  const Features = [
+  const Features = [ // have to make it dynamic create routes need to change course schema
     {
       icon: <Video size={36} />,
-      text: `Total watch Time of ${watchTime}`,
+      text: `Total no. of 42+ videos`, // text: `Total no. of ${totalVideos}+ videos`,
     },
     {
       icon: <BookMarked size={36} />,
-      text: `${totalChapters} total chapters`,
+      text: `${totalChapters} total modules`,
     },
     {
       icon: <Newspaper size={36} />,
-      text: "Chapter Wise Notes",
+      text: "Learn at your own pace", 
     },
     {
       icon: <NotebookPen size={36} />,
@@ -88,7 +88,7 @@ const Course = () => {
     },
     {
       icon: <Infinity size={36} />,
-      text: "Lifetime access to course material",
+      text: "Access to course material for 1 year", // make it dynamic 
     }
   ];
 

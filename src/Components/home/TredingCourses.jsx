@@ -2,7 +2,7 @@ import React from 'react'
 
 const TredingCourses = () => {
     return (
-        <section className="text-gray-600 body-font pt-12">
+        <section className="text-gray-600 body-font pt-12 px-16">
             <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl font-heading text-center text-gray-900">
                 Trending Courses
             </h1>
