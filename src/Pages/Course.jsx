@@ -76,7 +76,7 @@ const Course = () => {
     },
     {
       icon: <Newspaper size={36} />,
-      text: "Learn at your own pace", 
+      text: "Learn at your own pace",
     },
     {
       icon: <NotebookPen size={36} />,
@@ -131,7 +131,6 @@ const Course = () => {
           <h4 className='font-Inter text-[40px] font-semibold'>{courseData.courseName}</h4>
           <h2 className='font-popins text-[22px] font-normal pt-3'>{courseData.heading}</h2>
           <p className='font-SubHeading text-[18px] pt-2 text-justify'>{courseData.courseDescription}</p>
-
           <div className='flex justify-between items-center pt-4'>
 
             <div className='flex gap-3 items-center'>
@@ -201,7 +200,15 @@ const Course = () => {
             <StyledAccordionDetails>
               <ul className='list-disc'>
                 <p className='font-popins text-[18px] font-medium px-10 py-4'>Module Objective</p>
-                <p className='font-Inter text-[16px] font-normal px-10 pb-4'>{chapter.ModuleDescription}</p>
+                <ul className='list-disc px-14 pb-4'>
+                  {chapter.ModuleDescription?.split('•')
+                    .filter(point => point.trim() !== '')
+                    .map((point, index) => (
+                      <li key={index} className='font-Inter text-[16px] text-gray-700 leading-relaxed'>
+                        {point.trim()}
+                      </li>
+                    ))}
+                </ul>
                 <h4 className='font-bold font-popins text-[18px] py-4 px-10 mb-5 bg-slate-300'>Videos</h4>
                 {chapter.Videos.map((content, index) => (
                   <li key={index} className='flex w-full justify-between items-center px-10'>
