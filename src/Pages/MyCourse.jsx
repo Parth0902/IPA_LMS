@@ -31,7 +31,7 @@ export default function CoursePlayer() {
     queryFn: async () => {
       const response = await apiService({
         method: 'GET',
-        endpoint: `getVideos/${courseId}`,
+        endpoint: `/getVideos/${courseId}`,
         token,
       });
       return response;
