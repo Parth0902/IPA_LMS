@@ -60,21 +60,29 @@ const MyLearing = () => {
       <div className="flex bg-slate-50">
         {showSideBar && <SideBar setShowSideBar={setShowSideBar} flag={showSideBar} />}
         <div className="flex-grow">
-          {isLoading ? (
-            <div className="flex justify-center items-center h-[60vh] text-gray-700 text-xl">
-              Loading courses...
-            </div>
-          ) : isError ? (
-            <div className="flex justify-center items-center h-[60vh] text-red-500 text-xl">
-              Failed to load courses
-            </div>
-          ) : courses.length === 0 ? (
-            <div className="flex justify-center items-center h-[60vh] text-gray-600 text-lg">
-              No courses found.
-            </div>
-          ) : (
-            <Page courses={courses} courseDestination="myCourse" />
-          )}
+          {(() => {
+            if (isLoading) {
+              return (
+                <div className="flex justify-center items-center h-[60vh] text-gray-700 text-xl">
+                  Loading courses...
+                </div>
+              );
+            } else if (isError) {
+              return (
+                <div className="flex justify-center items-center h-[60vh] text-red-500 text-xl">
+                  Failed to load courses
+                </div>
+              );
+            } else if (courses.length === 0) {
+              return (
+                <div className="flex justify-center items-center h-[60vh] text-gray-600 text-lg">
+                  No courses found.
+                </div>
+              );
+            } else {
+              return <Page courses={courses} courseDestination="myCourse" />;
+            }
+          })()}
         </div>
       </div>
     </div>

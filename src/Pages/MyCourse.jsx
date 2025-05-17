@@ -15,6 +15,7 @@ export default function CoursePlayer() {
   const [activeChapter, setActiveChapter] = useState(0);
   const [activeVideo, setActiveVideo] = useState('');
   const [iframeUrl, setIframeUrl] = useState('');
+  const [activeTab, setActiveTab] = useState('Overview');
   const { token } = useAuth();
   const { courseId } = useParams();
   const apiService = useApi();
@@ -71,10 +72,10 @@ export default function CoursePlayer() {
     ) || {};
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col lg:flex-row min-h-screen mt-24 bg-gray-100">
+    <div className="flex flex-col bg-gray-100">
+      <div className="flex flex-col lg:flex-row min-h-screen mt-24 ">
         {/* Video Player */}
-        <div className="lg:w-2/3 w-full p-6">
+        <div className="lg:w-2/3 w-full px-6 pb-6">
           <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow">
             {iframeUrl ? (
               <iframe
@@ -93,25 +94,48 @@ export default function CoursePlayer() {
           </div>
 
           {/* Video Details */}
-          <div className="mt-4 bg-white p-6 rounded-lg shadow">
-            <h2 className="text-2xl font-bold mb-2">
-              {currentVideo.videoName || 'Video Title'}
-            </h2>
-            <p className="text-gray-600 mb-2">
-              {currentVideo.videoDescription || 'Video description will appear here.'}
-            </p>
-            <p className="text-sm text-gray-500">
-              Duration: {currentVideo.videoDuration || 'N/A'}
-            </p>
-          </div>
-          {/* Review Section */}
-          <div className="bg-white w-full py-8 px-6">
-            <GiveReview courseId={courseId} token={token} />
+          <div className="mt-4 bg-white rounded-lg shadow">
+            {/* Tab Headers */}
+            <div className="border-b px-6 pt-4 flex gap-6">
+              {['Overview', 'Reviews'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`pb-2 text-sm font-medium border-b-2 transition-all ${activeTab === tab
+                      ? 'border-black text-black'
+                      : 'border-transparent text-gray-500 hover:text-black'
+                    }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+
+            {/* Tab Content */}
+            <div className="p-6">
+              {activeTab === 'Overview' && (
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">
+                    {currentVideo.videoName || 'Video Title'}
+                  </h2>
+                  <p className="text-gray-700 mb-3">
+                    {currentVideo.videoDescription || 'Video description will appear here.'}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Duration: {currentVideo.videoDuration || 'N/A'}
+                  </p>
+                </div>
+              )}
+
+              {activeTab === 'Reviews' && (
+                <GiveReview courseId={courseId} token={token} />
+              )}
+            </div>
           </div>
         </div>
 
         {/* Sidebar Course Content */}
-        <aside className="lg:w-1/3 w-full bg-white border-l px-6 sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto mb-6">
+        <aside className="lg:w-1/3 w-full bg-white border-l px-6 rounded-lg sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto mb-6">
           <div className="sticky top-0 py-6 bg-white z-10 border-b">
             <h2 className="text-xl font-bold">Course Content</h2>
             <p className="text-sm text-gray-500">
