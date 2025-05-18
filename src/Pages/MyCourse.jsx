@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, CheckCircle } from 'lucide-react';
+import { Play, CheckCircle, VideoIcon } from 'lucide-react';
 import {
   Accordion,
   AccordionSummary,
@@ -10,22 +10,20 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
 import GiveReview from '../Components/course/GiveReview';
+import { toast } from 'react-toastify';
 
 export default function CoursePlayer() {
   const [activeChapter, setActiveChapter] = useState(0);
   const [activeVideo, setActiveVideo] = useState('');
   const [iframeUrl, setIframeUrl] = useState('');
   const [activeTab, setActiveTab] = useState('Overview');
+  const [doubt, setDoubt] = useState('');
   const { token } = useAuth();
   const { courseId } = useParams();
   const apiService = useApi();
 
-  console.log('courseId:', courseId, 'type:', typeof courseId);
-
-
   const {
     data: courseData,
-    refetch,
     isFetching,
   } = useQuery({
     queryKey: ['courseData'],
@@ -41,8 +39,16 @@ export default function CoursePlayer() {
   });
 
   useEffect(() => {
-    if (token) refetch();
-  }, [token, refetch]);
+    if (courseData) {
+      const firstChapter = courseData?.chapters?.[0];
+      const firstVideo = firstChapter?.Videos?.[0];
+
+      if (firstChapter && firstVideo) {
+        console.log(firstChapter);
+        selectVideo(0, firstVideo.videoId);
+      }
+    }
+  }, [courseData]);
 
   const selectVideo = async (chapterIndex, videoId) => {
     setActiveChapter(chapterIndex);
@@ -71,6 +77,16 @@ export default function CoursePlayer() {
       (v) => v.videoId === activeVideo
     ) || {};
 
+    const handleDoubtSubmit = ()  => {
+      // Handle doubt submission logic here
+      if(!doubt) {
+        toast.error('Please enter a doubt before submitting.');
+        return;
+      }
+      toast.success('Doubt submitted successfully!');
+      setDoubt('');
+    }
+
   return (
     <div className="flex flex-col bg-gray-100">
       <div className="flex flex-col lg:flex-row min-h-screen mt-24 ">
@@ -82,8 +98,7 @@ export default function CoursePlayer() {
                 title="Course Video"
                 src={iframeUrl}
                 className="w-full h-full"
-                allow="autoplay fullscreen"
-                allowFullScreen
+                allow=""
                 loading="lazy"
               />
             ) : (
@@ -101,7 +116,7 @@ export default function CoursePlayer() {
           <div className="mt-4 bg-white rounded-lg shadow">
             {/* Tab Headers */}
             <div className="border-b px-6 pt-4 flex gap-6">
-              {['Overview', 'Reviews'].map((tab) => (
+              {['Overview', 'Reviews', 'Doubts'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -134,6 +149,21 @@ export default function CoursePlayer() {
               {activeTab === 'Reviews' && (
                 <GiveReview courseId={courseId} token={token} />
               )}
+
+              {activeTab === 'Doubts' && (
+                <div className='flex flex-col gap-4'>
+                    <textarea
+                      className="border rounded-lg p-2"
+                      rows="4"
+                      placeholder="Ask your doubt here..."
+                      onChange={(e) => setDoubt(e.target.value)}
+                      value={doubt}
+                    ></textarea>
+                    <button onClick={handleDoubtSubmit} className="bg-gray-700 text-white py-2 px-4 rounded-lg">
+                      Submit
+                    </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -144,7 +174,7 @@ export default function CoursePlayer() {
             <h2 className="text-xl font-bold">Course Content</h2>
             <p className="text-sm text-gray-500">
               {features.chapters} chapters • {features.quizes} quizzes •{' '}
-              {features.watchTime} hours total
+              {features.watchTime} videos
             </p>
           </div>
 
@@ -185,9 +215,9 @@ export default function CoursePlayer() {
                         : 'hover:bg-gray-50 text-gray-700'
                         }`}
                     >
-                      <CheckCircle
+                      <VideoIcon
                         size={18}
-                        className="text-green-500 mt-1 shrink-0"
+                        className="text-slate-500 mt-1 shrink-0"
                       />
                       <div className="flex flex-col text-sm">
                         <span>{video.videoName}</span>

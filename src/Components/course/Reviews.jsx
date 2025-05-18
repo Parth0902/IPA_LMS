@@ -52,7 +52,7 @@ const Reviews = () => {
                 <Rating value={star} readOnly precision={0.5} sx={{ fontSize: '1.5rem' }} />
               </div>
               <span className="font-popins text-sm font-medium text-gray-600">
-                {(reviewsData.filter((review) => review.rating === star).length / reviewsData.length) * 100}%
+                {Math.floor((reviewsData.filter((review) => review.rating === star).length / reviewsData.length) * 100)}%
               </span>
             </div>
           ))}

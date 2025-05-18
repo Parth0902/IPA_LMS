@@ -61,14 +61,14 @@ const Course = () => {
   }
 
   const { courseData, chapters } = Data;
-  // const watchTime = courseData?.Features?.watchTime || '0h 0m';
+  const totalVideos = courseData?.Features?.watchTime || 0;
   const totalChapters = courseData?.Features?.chapters || 0;
   const totalQuizzes = courseData?.Features?.quizes || 0;
 
   const Features = [ // have to make it dynamic create routes need to change course schema
     {
       icon: <Video size={36} />,
-      text: `Total no. of 42+ videos`, // text: `Total no. of ${totalVideos}+ videos`,
+      text: `Total no. of ${totalVideos}+ videos`, // text: `Total no. of ${totalVideos}+ videos`,
     },
     {
       icon: <BookMarked size={36} />,
@@ -183,7 +183,7 @@ const Course = () => {
       </section>
 
       <section className='xl:px-[120px] pb-12 flex justify-center flex-col gap-2 items-center'>
-        <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center pb-10'>Chapters of this course</h2>
+        <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center pb-10'>Modules of this course</h2>
         {chapters.map((chapter) => (
           <Accordion key={chapter._id} className='w-[70%]'>
             <StyledAccordionSummary
@@ -250,8 +250,7 @@ const Course = () => {
       </section>
 
       <section>
-        <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Recommended courses</h2>
-        {/* You can map recommended courses here */}
+        {/* <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Recommended courses</h2> */}
       </section>
     </div>
   );
