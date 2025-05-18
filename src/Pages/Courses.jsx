@@ -73,7 +73,7 @@ const Courses = () => {
   const allCourses = data?.pages.flatMap((page) => page.data) || [];
 
   return (
-    <div className="flex flex-col mt-24 font-sans relative">
+    <div className="flex flex-col mt-20 font-sans relative">
       {!showSideBar && (
         <button
           className="flex items-center cursor-pointer absolute top-5 left-2 border border-gray-300 py-2 rounded-lg px-3"
@@ -91,25 +91,41 @@ const Courses = () => {
       <div className="flex bg-slate-50">
         {showSideBar && <SideBar setShowSideBar={setShowSideBar} flag={showSideBar} />}
         <div className="flex-grow">
-          {isLoading ? (
-            <div className="flex justify-center items-center h-[60vh] text-gray-700 text-xl">Loading courses...</div>
-          ) : isError ? (
-            <div className="flex justify-center items-center h-[60vh] text-red-500 text-xl">Failed to load courses</div>
-          ) : (
-            <>
-              <Page 
-              courses={allCourses}
-              courseDestination={"course"}
-              />
-              <div ref={loadMoreRef} className="flex justify-center py-8">
-                {isFetchingNextPage ? (
-                  <span className="text-gray-600 text-sm">Loading more...</span>
-                ) : !hasNextPage ? (
-                  <span className="text-gray-400 text-sm">No more courses</span>
-                ) : null}
-              </div>
-            </>
-          )}
+          {(() => {
+            let content;
+            if (isLoading) {
+              content = (
+                <div className="flex justify-center items-center h-[60vh] text-gray-700 text-xl">
+                  Loading courses...
+                </div>
+              );
+            } else if (isError) {
+              content = (
+                <div className="flex justify-center items-center h-[60vh] text-red-500 text-xl">
+                  Failed to load courses
+                </div>
+              );
+            } else {
+              let loadMoreContent = null;
+              if (isFetchingNextPage) {
+                loadMoreContent = <span className="text-gray-600 text-sm">Loading more...</span>;
+              } else if (!hasNextPage) {
+                loadMoreContent = <span className="text-gray-400 text-sm">No more courses</span>;
+              }
+              content = (
+                <>
+                  <Page 
+                    courses={allCourses}
+                    courseDestination={"course"}
+                  />
+                  <div ref={loadMoreRef} className="flex justify-center py-8">
+                    {loadMoreContent}
+                  </div>
+                </>
+              );
+            }
+            return content;
+          })()}
         </div>
       </div>
     </div>

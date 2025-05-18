@@ -11,17 +11,64 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../Context/AuthContext';
 import { useCart } from '../Context/CartContext';
 
-const StyledAccordionSummary = styled(AccordionSummary)`
-  background-color: #f5f5f5;
-  color: #333;
+const StyledAccordion = styled(Accordion)`
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+
   &:hover {
-    background-color: #e0e0e0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  }
+
+  &.Mui-expanded {
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  &::before {
+    display: none;
+  }
+`;
+
+
+const StyledAccordionSummary = styled(AccordionSummary)`
+  padding: 0 24px;
+  background: linear-gradient(to right, #f0f4ff, #f7f9ff);
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 18px;
+  min-height: 70px;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(to right, #e3eaff, #f0f4ff);
+  }
+
+  .MuiAccordionSummary-content {
+    margin: 12px 0;
+  }
+
+  .MuiAccordionSummary-expandIconWrapper {
+    transition: transform 0.3s ease;
+  }
+
+  .MuiAccordionSummary-expandIconWrapper.Mui-expanded {
+    transform: rotate(180deg);
   }
 `;
 
 const StyledAccordionDetails = styled(AccordionDetails)`
-  padding: 16px;
+  background-color: #f9fafb;
+  padding: 24px;
+  font-size: 16px;
+  color: #374151;
+  border-top: 1px solid #e5e7eb;
 `;
+
+
+
 
 const Course = () => {
   const { token } = useAuth();
@@ -80,7 +127,7 @@ const Course = () => {
     },
     {
       icon: <NotebookPen size={36} />,
-      text: `${totalQuizzes} Total Quizzes`,
+      text: `${totalQuizzes} total assessments`,
     },
     {
       icon: <Trophy size={36} />,
@@ -120,33 +167,42 @@ const Course = () => {
   ];
 
 
+  // Top of your component file - define reusable utility classes
+  const sectionHeading = 'font-Inter text-[40px] font-semibold text-center';
+  const subText = 'text-[18px] text-gray-800 leading-relaxed';
+  const cardWrapper = 'bg-white shadow-md rounded-2xl p-6 transition-transform hover:scale-[1.02]';
+
   return (
     <div className='mt-24'>
-      <section className='flex justify-around xl:mx-[120px] py-12'>
-        <div className='w-5/12 h-full'>
-          <img src={courseData.courseThumbNail} alt="" />
 
+      {/* Hero Section */}
+      <section className='flex flex-col lg:flex-row justify-around xl:mx-[120px] py-12 gap-10'>
+        <div className='lg:w-5/12'>
+          <img src={courseData.courseThumbNail} alt={courseData.courseName} className="rounded-xl w-full" />
         </div>
-        <div className='w-6/12'>
+        <div className='lg:w-6/12 space-y-4'>
           <h4 className='font-Inter text-[40px] font-semibold'>{courseData.courseName}</h4>
-          <h2 className='font-popins text-[22px] font-normal pt-3'>{courseData.heading}</h2>
-          <p className='font-SubHeading text-[18px] pt-2 text-justify'>{courseData.courseDescription}</p>
-          <div className='flex justify-between items-center pt-4'>
+          <h2 className='font-popins text-[22px]'>{courseData.heading}</h2>
+          <p className='font-SubHeading text-[18px] text-justify'>{courseData.courseDescription}</p>
 
-            <div className='flex gap-3 items-center'>
-              <p className='font-popins text-[20px] font-bold'>Price</p>
-              <h2 className='font-popins text-[22px] font-normal flex gap-3 items-center'>
-                <IndianRupee size={18} /> {courseData.coursePrice}
-              </h2>
+          <div className='flex justify-between md:items-center flex-col md:flex-row '>
+            <div className='flex gap-2 text-[20px] items-end'>
+              <p className=' font-semibold'>Price :</p>
+              <div className='flex gap-1 items-center'>
+                <IndianRupee size={20} />
+                <span>{courseData.coursePrice}/-</span>
+                <span className='text-sm'>(excl. G.S.T)</span>
+              </div>
             </div>
 
             <div className='flex gap-3 items-center'>
-              <p className='font-popins text-[20px] font-bold '>Ratings</p>
-              <Rating name="read-only" value={courseData.rating || 4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
+              <p className='text-[20px] font-bold'>Ratings</p>
+              <Rating value={courseData.rating || 4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
             </div>
           </div>
+
           <button
-            className='bg-black text-white mt-5 py-3 px-4 font-Roboto font-medium rounded-lg flex gap-3'
+            className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'
             onClick={handleAddToCart}
           >
             Add to Cart
@@ -155,11 +211,12 @@ const Course = () => {
         </div>
       </section>
 
+      {/* Features Section */}
       <section className='xl:px-[120px]'>
-        <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center'>Features of this course</h2>
+        <h2 className={sectionHeading}>Features of this course</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center py-12'>
           {Features.map((feature, index) => (
-            <div key={index} className='flex gap-10 w-[300px] md:w-[400px] my-3 items-center'>
+            <div key={index} className='flex gap-6 w-[90%] max-w-[400px] items-center'>
               {feature.icon}
               <p className='text-[20px] font-popins font-medium'>{feature.text}</p>
             </div>
@@ -167,92 +224,55 @@ const Course = () => {
         </div>
       </section>
 
-      <section className="xl:px-[120px]">
-        <h2 className="font-Inter text-[40px] font-semibold pt-5 text-center">Objectives of this course</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12">
+      {/* Objectives Section */}
+      <section className='xl:px-[120px]'>
+        <h2 className={sectionHeading}>Learning of this course</h2>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-8 py-12'>
           {objectives.map((objective, index) => (
-            <div
-              key={index}
-              className="bg-white shadow-md rounded-2xl p-6 flex flex-col gap-3 transition-transform hover:scale-[1.02]"
-            >
-              <p className="text-[18px] font-normal text-gray-800 leading-relaxed">{objective.text}</p>
+            <div key={index} className={cardWrapper}>
+              <p className={subText}>{objective.text}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className='xl:px-[120px] pb-12 flex justify-center flex-col gap-2 items-center'>
-        <h2 className='font-Inter text-[40px] font-semibold pt-5 text-center pb-10'>Modules of this course</h2>
+      {/* Modules Section */}
+      <section className='xl:px-[120px] pb-12 flex flex-col gap-6 items-center'>
+        <h2 className={sectionHeading}>Modules of this course</h2>
         {chapters.map((chapter) => (
-          <Accordion key={chapter._id} className='w-[70%]'>
-            <StyledAccordionSummary
-              expandIcon={<ChevronDown />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              <div className='flex w-full justify-between px-10 items-center'>
-                <p className='font-popins text-[20px] font-medium'>{chapter.ModuleName}</p>
-                <p>- {chapter.ModuleDuration}</p>
+          <StyledAccordion key={chapter._id} className='w-full max-w-[900px]'>
+            <StyledAccordionSummary expandIcon={<ChevronDown />}>
+              <div className='flex w-full justify-between px-6 items-center'>
+                <p className='text-[20px] font-medium'>{chapter.ModuleName}</p>
               </div>
             </StyledAccordionSummary>
             <Divider />
             <StyledAccordionDetails>
-              <ul className='list-disc'>
-                <p className='font-popins text-[18px] font-medium px-10 py-4'>Module Objective</p>
-                <ul className='list-disc px-14 pb-4'>
+              <div className='px-4'>
+                <h4 className='text-[18px] font-medium py-2'>Module Objective</h4>
+                <ul className='list-disc px-6 pb-4'>
                   {chapter.ModuleDescription?.split('•')
                     .filter(point => point.trim() !== '')
                     .map((point, index) => (
-                      <li key={index} className='font-Inter text-[16px] text-gray-700 leading-relaxed'>
+                      <li key={index} className={subText}>
                         {point.trim()}
                       </li>
                     ))}
                 </ul>
-                <h4 className='font-bold font-popins text-[18px] py-4 px-10 mb-5 bg-slate-300'>Videos</h4>
-                {chapter.Videos.map((content, index) => (
-                  <li key={index} className='flex w-full justify-between items-center px-10'>
-                    <span className='font-popins text-[18px] flex gap-3'>
-                      <span className='font-medium w-[10px]'>
-                        {index + 1}
-                      </span>
-                      {content.videoName}
-                    </span>
-                    <span className='w-[100px] font-Inter font-normal text-slate-700'>
-                      - {content.videoDuration}
-                    </span>
-                  </li>
-                ))}
-
-                <h4 className='font-bold font-popins text-[18px] py-4 my-5 px-10 w-full bg-slate-300'>Quizzes</h4>
-                {chapter.quizes.map((content, index) => (
-                  <li key={index} className='flex w-full justify-between items-center px-10'>
-                    <span className='font-popins text-[18px] flex gap-3'>
-                      <span className='font-medium w-[10px]'>
-                        {index + 1}
-                      </span>
-                      {content.quizName}
-                    </span>
-                    <span className='w-[100px] font-Inter font-normal text-slate-700'>
-                      - {content.quizDuration}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              </div>
             </StyledAccordionDetails>
-          </Accordion>
+          </StyledAccordion>
         ))}
       </section>
 
+      {/* Reviews Section */}
       <section className='bg-gray-50 py-[60px]'>
         <h2 className='font-Inter text-[42px] font-semibold text-center'>Course Reviews</h2>
         <Reviews />
       </section>
-
-      <section>
-        {/* <h2 className='font-Inter text-[42px] font-semibold pb-[60px] text-center'>Recommended courses</h2> */}
-      </section>
     </div>
   );
+
 };
 
 export default Course;

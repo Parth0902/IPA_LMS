@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, CheckCircle, VideoIcon } from 'lucide-react';
+import { Play, VideoIcon } from 'lucide-react';
 import {
   Accordion,
   AccordionSummary,
@@ -44,7 +44,6 @@ export default function CoursePlayer() {
       const firstVideo = firstChapter?.Videos?.[0];
 
       if (firstChapter && firstVideo) {
-        console.log(firstChapter);
         selectVideo(0, firstVideo.videoId);
       }
     }
@@ -66,19 +65,17 @@ export default function CoursePlayer() {
   if (!courseData || isFetching) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <span className="text-lg font-semibold">Loading Course...</span>
+        <span className="text-xl font-semibold">Loading Course...</span>
       </div>
     );
   }
 
-  const features = courseData.courseData?.Features || {};
   const currentVideo =
     courseData.chapters[activeChapter]?.Videos.find(
       (v) => v.videoId === activeVideo
     ) || {};
 
   const handleDoubtSubmit = () => {
-    // Handle doubt submission logic here
     if (!doubt) {
       toast.error('Please enter a doubt before submitting.');
       return;
@@ -88,8 +85,8 @@ export default function CoursePlayer() {
   }
 
   return (
-    <div className="flex flex-col bg-gray-100">
-      <div className="flex flex-col lg:flex-row min-h-screen mt-24 ">
+    <div className="flex flex-col bg-gray-100 text-lg">
+      <div className="flex flex-col lg:flex-row min-h-screen mt-24">
         {/* Video Player */}
         <div className="lg:w-2/3 w-full px-6 pb-6">
           <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow">
@@ -97,8 +94,8 @@ export default function CoursePlayer() {
               <iframe
                 title="Course Video"
                 src={iframeUrl}
-                className="w-full h-full"
-                allow=""
+                className="w-full h-full rounded-xl"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 loading="lazy"
               />
             ) : (
@@ -114,33 +111,32 @@ export default function CoursePlayer() {
 
           {/* Video Details */}
           <div className="mt-4 bg-white rounded-lg shadow">
-            {/* Tab Headers */}
             <div className="border-b px-6 pt-4 flex gap-6">
               {['Overview', 'Reviews', 'Doubts'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`pb-2 text-sm font-medium border-b-2 transition-all ${activeTab === tab
-                    ? 'border-black text-black'
-                    : 'border-transparent text-gray-500 hover:text-black'
-                    }`}
+                  className={`pb-2 text-base font-medium border-b-2 transition-all ${
+                    activeTab === tab
+                      ? 'border-black text-black'
+                      : 'border-transparent text-gray-500 hover:text-black'
+                  }`}
                 >
                   {tab}
                 </button>
               ))}
             </div>
 
-            {/* Tab Content */}
             <div className="p-6">
               {activeTab === 'Overview' && (
                 <div>
-                  <h2 className="text-xl font-semibold mb-2">
+                  <h2 className="text-2xl font-semibold mb-2">
                     {currentVideo.videoName || 'Video Title'}
                   </h2>
-                  <p className="text-gray-700 mb-3">
+                  <p className="text-lg text-gray-700 mb-3">
                     {currentVideo.videoDescription || 'Video description will appear here.'}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-base text-gray-500">
                     Duration: {currentVideo.videoDuration || 'N/A'}
                   </p>
                 </div>
@@ -153,13 +149,13 @@ export default function CoursePlayer() {
               {activeTab === 'Doubts' && (
                 <div className='flex flex-col gap-4'>
                   <textarea
-                    className="border rounded-lg p-2"
+                    className="border rounded-lg p-3 text-base"
                     rows="4"
                     placeholder="Ask your doubt here..."
                     onChange={(e) => setDoubt(e.target.value)}
                     value={doubt}
                   ></textarea>
-                  <button onClick={handleDoubtSubmit} className="bg-gray-700 text-white py-2 px-4 rounded-lg">
+                  <button onClick={handleDoubtSubmit} className="bg-gray-700 text-white py-2 px-5 text-base rounded-lg">
                     Submit
                   </button>
                 </div>
@@ -171,11 +167,7 @@ export default function CoursePlayer() {
         {/* Sidebar Course Content */}
         <aside className="lg:w-1/3 w-full bg-white border-l px-6 rounded-lg sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto mb-6">
           <div className="sticky top-0 py-6 bg-white z-10 border-b">
-            <h2 className="text-xl font-bold">Course Content</h2>
-            <p className="text-sm text-gray-500">
-              {features.chapters} chapters • {features.quizes} quizzes •{' '}
-              {features.watchTime} videos
-            </p>
+            <h2 className="text-xl font-bold">Modules of FDFM</h2>
           </div>
 
           <div className="space-y-4">
@@ -200,7 +192,7 @@ export default function CoursePlayer() {
                   }}
                 >
                   <div>
-                    <h3 className="font-semibold">{chapter.ModuleName}</h3>
+                    <h3 className="font-semibold text-lg">{chapter.ModuleName}</h3>
                   </div>
                 </AccordionSummary>
 
@@ -209,18 +201,19 @@ export default function CoursePlayer() {
                     <button
                       key={video.videoId}
                       onClick={() => selectVideo(chapterIndex, video.videoId)}
-                      className={`w-full text-left flex items-start gap-3 p-3 mx-2 my-1 rounded-md transition ${activeVideo === video.videoId
-                        ? 'bg-blue-50 text-blue-600 font-medium'
-                        : 'hover:bg-gray-50 text-gray-700'
-                        }`}
+                      className={`w-full text-left flex items-start gap-3 p-3 mx-2 my-1 rounded-md transition ${
+                        activeVideo === video.videoId
+                          ? 'bg-blue-50 text-blue-600 font-medium'
+                          : 'hover:bg-gray-50 text-gray-700'
+                      }`}
                     >
                       <VideoIcon
                         size={18}
                         className="text-slate-500 mt-1 shrink-0"
                       />
-                      <div className="flex flex-col text-sm">
+                      <div className="flex flex-col text-base">
                         <span>{video.videoName}</span>
-                        <div className="flex items-center text-xs text-gray-500 mt-1">
+                        <div className="flex items-center text-sm text-gray-500 mt-1">
                           <Play size={12} className="mr-1" />
                           <span>{video.videoDuration}</span>
                         </div>
@@ -237,9 +230,8 @@ export default function CoursePlayer() {
                       className="flex items-start p-3 mx-2 my-1 rounded-md border-t border-gray-100 hover:bg-gray-50"
                     >
                       <span className="mr-3">📝</span>
-                      <div className="text-sm">
+                      <div className="text-base">
                         <p className="font-medium text-gray-800">{quiz.quizName}</p>
-                        <p className="text-xs text-gray-500">{quiz.quizDuration}</p>
                       </div>
                     </a>
                   ))}
@@ -249,7 +241,6 @@ export default function CoursePlayer() {
           </div>
         </aside>
       </div>
-
     </div>
   );
 }
