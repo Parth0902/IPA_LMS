@@ -94,28 +94,28 @@ const Course = () => {
 
   const objectives = [
     {
-      heading: "Understand the Purpose of the FDFM Course",
-      text: "Explain the objectives, scope, and significance of the course in diabetic foot management.",
+      // heading: "Understand the Purpose of the FDFM Course",
+      text: "Designed to provide comprehensive knowledge on prevention, assessment, and management of diabetic foot complications",
     },
     {
-      heading: "Recognize the Need for Specialized Training",
-      text: "Identify the challenges and global burden of diabetic foot complications, with a focus on improving patient outcomes.",
+      // heading: "Recognize the Need for Specialized Training",
+      text: "Focuses on pathophysiology, clinical evaluation, wound care, footwear, surgical interventions, and rehabilitation",
     },
     {
-      heading: "Outline the Course Structure",
-      text: "Describe the key topics covered in the FDFM course, including anatomy, biomechanics, neuropathy, vascular complications, and wound care.",
+      // heading: "Outline the Course Structure",
+      text: "Equips healthcare professionals with essential clinical skills and decision-making abilities to improve patient outcomes",
     },
     {
-      heading: "Appreciate the Multidisciplinary Approach",
-      text: "Understand the collaborative role of different healthcare professionals in preventing, diagnosing, and managing diabetic foot conditions.",
+      // heading: "Appreciate the Multidisciplinary Approach",
+      text: "Understand the pathophysiology and risk factors associated with diabetic foot ulcers. Develop skills in foot examination, screening, and risk stratification"
     },
     {
-      heading: "Identify Key Anatomical Structures",
-      text: "Describe the bones, joints, muscles, tendons, and ligaments of the foot.",
+      // heading: "Identify Key Anatomical Structures",
+      text: "Learn strategies for patient education, lifestyle modification, and multidisciplinary care",
     },
     {
-      heading: "Understand the Vascular and Nervous Supply",
-      text: "Explain the arterial, venous, and nerve supply of the foot and their clinical relevance.",
+      // heading: "Understand the Vascular and Nervous Supply",
+      text: "Recognize when surgical intervention is necessary and how to coordinate advanced treatments",
     },
   ];
 
@@ -175,8 +175,7 @@ const Course = () => {
               key={index}
               className="bg-white shadow-md rounded-2xl p-6 flex flex-col gap-3 transition-transform hover:scale-[1.02]"
             >
-              <h3 className="text-[20px] font-semibold text-gray-800">{objective.heading}</h3>
-              <p className="text-[16px] font-normal text-gray-600 leading-relaxed">{objective.text}</p>
+              <p className="text-[18px] font-normal text-gray-800 leading-relaxed">{objective.text}</p>
             </div>
           ))}
         </div>
