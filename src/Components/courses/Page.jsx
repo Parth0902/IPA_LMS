@@ -15,7 +15,7 @@ const Page = ({ courses, courseDestination }) => {
               topic={course.courseTopic}
               title={course.heading}
               price={course.coursePrice}
-              guideName={course.rating}
+              rating={course.rating}
               courseId={course._id}
               courseDestination={courseDestination}
             />

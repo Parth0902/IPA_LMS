@@ -32,7 +32,7 @@ const MyLearing = () => {
   const courses = Array.isArray(courseDataRaw) ? courseDataRaw : [];
 
   return (
-    <div className="flex flex-col mt-24 font-sans relative">
+    <div className="flex flex-col mt-20 font-sans relative">
       {!showSideBar && (
         <button
           className="flex items-center cursor-pointer absolute top-5 left-2 border border-gray-300 py-2 rounded-lg px-3"

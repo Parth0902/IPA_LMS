@@ -87,9 +87,13 @@ export default function CoursePlayer() {
                 loading="lazy"
               />
             ) : (
-              <div className="flex items-center justify-center h-full text-white">
-                Loading video...
-              </div>
+              <video
+                src="https://IPA-Images.b-cdn.net/FDFM%20Load%20Screen.mp4"
+                className='w-full h-full object-cover'
+                autoPlay
+                loop
+                muted
+              ></video>
             )}
           </div>
 
@@ -102,8 +106,8 @@ export default function CoursePlayer() {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`pb-2 text-sm font-medium border-b-2 transition-all ${activeTab === tab
-                      ? 'border-black text-black'
-                      : 'border-transparent text-gray-500 hover:text-black'
+                    ? 'border-black text-black'
+                    : 'border-transparent text-gray-500 hover:text-black'
                     }`}
                 >
                   {tab}
