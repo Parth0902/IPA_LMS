@@ -3,6 +3,7 @@ import Rating from '@mui/material/Rating';
 import { useQuery } from '@tanstack/react-query';
 import { useApi } from '../../hooks/useApi';
 import { useParams } from 'react-router-dom';
+import { CircleUser } from 'lucide-react';
 
 const Reviews = () => {
   const apiService = useApi();
@@ -68,13 +69,11 @@ const Reviews = () => {
               className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-4"
             >
               <div className="flex items-center gap-4">
-                <img
-                  src={review.userProfilePicture || "https://dummyimage.com/302x302"}
-                  alt="profile"
-                  className="w-12 h-12 rounded-full object-cover"
+                <CircleUser
+                size={31}
                 />
                 <div>
-                  <p className="font-popins text-lg font-semibold text-gray-800">{review.name}</p>
+                  <p className="font-popins text-2xl font-semibold text-gray-800">{review.userName}</p>
                   <p className="font-popins text-sm text-gray-500">{review.date}</p>
                 </div>
               </div>

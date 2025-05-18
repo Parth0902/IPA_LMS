@@ -77,15 +77,15 @@ export default function CoursePlayer() {
       (v) => v.videoId === activeVideo
     ) || {};
 
-    const handleDoubtSubmit = ()  => {
-      // Handle doubt submission logic here
-      if(!doubt) {
-        toast.error('Please enter a doubt before submitting.');
-        return;
-      }
-      toast.success('Doubt submitted successfully!');
-      setDoubt('');
+  const handleDoubtSubmit = () => {
+    // Handle doubt submission logic here
+    if (!doubt) {
+      toast.error('Please enter a doubt before submitting.');
+      return;
     }
+    toast.success('Doubt submitted successfully!');
+    setDoubt('');
+  }
 
   return (
     <div className="flex flex-col bg-gray-100">
@@ -152,16 +152,16 @@ export default function CoursePlayer() {
 
               {activeTab === 'Doubts' && (
                 <div className='flex flex-col gap-4'>
-                    <textarea
-                      className="border rounded-lg p-2"
-                      rows="4"
-                      placeholder="Ask your doubt here..."
-                      onChange={(e) => setDoubt(e.target.value)}
-                      value={doubt}
-                    ></textarea>
-                    <button onClick={handleDoubtSubmit} className="bg-gray-700 text-white py-2 px-4 rounded-lg">
-                      Submit
-                    </button>
+                  <textarea
+                    className="border rounded-lg p-2"
+                    rows="4"
+                    placeholder="Ask your doubt here..."
+                    onChange={(e) => setDoubt(e.target.value)}
+                    value={doubt}
+                  ></textarea>
+                  <button onClick={handleDoubtSubmit} className="bg-gray-700 text-white py-2 px-4 rounded-lg">
+                    Submit
+                  </button>
                 </div>
               )}
             </div>
@@ -201,7 +201,6 @@ export default function CoursePlayer() {
                 >
                   <div>
                     <h3 className="font-semibold">{chapter.ModuleName}</h3>
-                    <p className="text-xs text-gray-500">{chapter.ModuleDuration}</p>
                   </div>
                 </AccordionSummary>
 
