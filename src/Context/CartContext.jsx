@@ -33,6 +33,7 @@ export const CartProvider = ({ children }) => {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     retry: false,
+    enabled: !!token,
   });
 
   // 2. Add Item
