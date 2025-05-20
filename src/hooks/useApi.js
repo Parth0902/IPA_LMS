@@ -1,9 +1,11 @@
+import { useRef } from 'react';
 import { useAuth } from '../Context/AuthContext';
 import { toast } from 'react-toastify';
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const useApi = () => {
   const { logout, token } = useAuth();
+  const toastShownRef = useRef(false);
 
   const callApi = async ({ method = 'GET', endpoint, data = null }) => {
     try {
@@ -26,22 +28,26 @@ export const useApi = () => {
 
       const response = await fetch(`${BASE_URL}${endpoint}`, options);
       const result = await response.json();
-      console.log(result)
-      if (response.status === 401) {
+
+      if (response.status === 401 && !toastShownRef.current) {
+        toastShownRef.current = true;
         toast.warn('Your session has expired. Please log in again.');
-        logout(); // ✅ Safe here
+        logout(); // safe here
         return null;
       }
 
-      if (!response.ok) {
+      if (!response.ok && !toastShownRef.current) {
+        toastShownRef.current = true;
         toast.warn(result?.message || 'Something went wrong');
         return null;
       }
-
+      toastShownRef.current = false; // reset after a successful call
       return result;
     } catch (error) {
-      toast.error('Network error or server not responding');
-      console.error('[apiService Error]', error);
+      if (!toastShownRef.current) {
+        toastShownRef.current = true;
+        toast.error('Network error or server not responding');
+      } console.error('[apiService Error]', error);
       return null;
     }
   };

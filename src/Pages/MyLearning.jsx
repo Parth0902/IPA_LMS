@@ -22,7 +22,6 @@ const MyLearing = () => {
         endpoint: `/myCourses`,
         token,
       });
-      console.log("My Courses Response:", response);
       return response;
     },
     enabled: !!token,

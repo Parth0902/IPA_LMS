@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
   const apiService = useApi()
 
   // 1. Fetch Cart
-  const { data: cartData, isLoading, isError, refetch } = useQuery({
+  const { data: cartData, isLoading, isError} = useQuery({
     queryKey: ['cartData'],
     queryFn: async () => {
       const response = await apiService({
@@ -30,9 +30,9 @@ export const CartProvider = ({ children }) => {
       }));
       return transformedCart;
     },
-    enabled: !!token,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    retry: false,
   });
 
   // 2. Add Item
@@ -77,14 +77,12 @@ export const CartProvider = ({ children }) => {
     cartItems: cartData || [],
     isLoading,
     isError,
-    refetchCart: refetch,
     addItem: addItemMutation.mutate,
     removeItem: removeItemMutation.mutate,
   }), [
     cartData,
     isLoading,
     isError,
-    refetch,
     addItemMutation.mutate,
     removeItemMutation.mutate,
   ]);

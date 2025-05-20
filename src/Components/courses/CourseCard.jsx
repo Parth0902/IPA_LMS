@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const CourseCard = ({ image, title, topic, price, courseId, courseDestination}) => {
+const CourseCard = ({ image, title, topic, price, courseId, courseDestination }) => {
   return (
     <Link className="w-[380px] h-[260px] p-4 mb-16 " to={`/${courseDestination}/${courseId}`}>
       <div className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300">
@@ -10,13 +10,15 @@ const CourseCard = ({ image, title, topic, price, courseId, courseDestination}) 
           <img alt={title} src={image} className="w-full h-full object-cover" />
         </div>
         <div className="p-4">
-          <h2 className="text-lg font-semibold text-gray-800 mb-1 truncate">{title}</h2> {/* Course Name */}
+          <h2 className="text-lg font-semibold text-gray-800 mb-1 truncate">{title}</h2>
           <div className="flex justify-between">
-            <p className="text-sm text-gray-500 mb-1 max-w-[70%] truncate">Topic: {topic}</p> {/* Topic */}
+            <p className="text-sm text-gray-500 mb-1 max-w-[70%] truncate">Topic: {topic}</p>
           </div>
-          <div className="flex justify-between">
-            <p className="text-sm text-gray-700 mb-1">Price: ₹{price}/- (excl. GST)</p>
-          </div>
+          {courseDestination !== 'myCourse' && (
+            <div className="flex justify-between">
+              <p className="text-sm text-gray-700 mb-1">Price: ₹{price}/- (excl. GST)</p>
+            </div>
+          )}
         </div>
       </div>
     </Link>

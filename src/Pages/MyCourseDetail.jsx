@@ -1,14 +1,11 @@
 import Rating from '@mui/material/Rating';
 import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
 import styled from '@emotion/styled';
-import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown, IndianRupee } from 'lucide-react';
+import { ChevronDown, VideoIcon } from 'lucide-react';
 import Reviews from '../Components/course/Reviews';
 import { useQuery } from '@tanstack/react-query';
 import { useApi } from '../hooks/useApi';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useAuth } from '../Context/AuthContext';
-import { useCart } from '../Context/CartContext';
+import { Link, useParams } from 'react-router-dom';
 
 const StyledAccordion = styled(Accordion)`
   background-color: white;
@@ -65,9 +62,7 @@ const StyledAccordionDetails = styled(AccordionDetails)`
   border-top: 1px solid #e5e7eb;
 `;
 
-const Course = () => {
-  const { token } = useAuth();
-  const { addItem } = useCart();
+const MyCourseDetail = () => {
   const { courseId } = useParams();
   const apiService = useApi();
 
@@ -78,14 +73,6 @@ const Course = () => {
     },
     enabled: !!courseId,
   });
-
-  const handleAddToCart = async () => {
-    if (!token) {
-      toast.warn("Login first");
-      return;
-    }
-    addItem(courseId);
-  };
 
   if (isLoading) {
     return (
@@ -104,36 +91,6 @@ const Course = () => {
   }
 
   const { courseData, chapters } = Data;
-  const totalVideos = courseData?.Features?.watchTime || 0;
-  const totalChapters = courseData?.Features?.chapters || 0;
-  const totalQuizzes = courseData?.Features?.quizes || 0;
-
-  const Features = [ // have to make it dynamic create routes need to change course schema
-    {
-      icon: <Video size={36} />,
-      text: `Total no. of ${totalVideos}+ videos`, // text: `Total no. of ${totalVideos}+ videos`,
-    },
-    {
-      icon: <BookMarked size={36} />,
-      text: `${totalChapters} total modules`,
-    },
-    {
-      icon: <Newspaper size={36} />,
-      text: "Learn at your own pace",
-    },
-    {
-      icon: <NotebookPen size={36} />,
-      text: `${totalQuizzes} total assessments`,
-    },
-    {
-      icon: <Trophy size={36} />,
-      text: "Certificate of Completion",
-    },
-    {
-      icon: <Infinity size={36} />,
-      text: "Access to course material for 1 year", // make it dynamic 
-    }
-  ];
 
   const objectives = [
     {
@@ -180,41 +137,18 @@ const Course = () => {
           <p className='font-SubHeading text-[18px] text-justify'>{courseData.courseDescription}</p>
 
           <div className='flex justify-between md:items-center flex-col md:flex-row '>
-            <div className='flex gap-2 text-[20px] items-end'>
-              <p className=' font-semibold'>Price :</p>
-              <div className='flex gap-1 items-center'>
-                <IndianRupee size={20} />
-                <span>{courseData.coursePrice}/-</span>
-                <span className='text-sm'>(excl. G.S.T)</span>
-              </div>
-            </div>
-
+            <Link to={`/myCourse/${courseId}/lectures`} className='flex gap-3 items-center'>
+              <div className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'>
+                Go To Lectures
+                <VideoIcon color="#ffffff" /></div>
+            </Link>
             <div className='flex gap-3 items-center'>
               <p className='text-[20px] font-bold'>Ratings</p>
               <Rating value={courseData.rating || 4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
             </div>
           </div>
 
-          <button
-            className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'
-            onClick={handleAddToCart}
-          >
-            Add to Cart
-            <ShoppingCart color="#ffffff" />
-          </button>
-        </div>
-      </section>
 
-      {/* Features Section */}
-      <section className='xl:px-[120px]'>
-        <h2 className={sectionHeading}>Features of this course</h2>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-center py-12'>
-          {Features.map((feature, index) => (
-            <div key={index} className='flex gap-6 w-[90%] max-w-[400px] items-center'>
-              {feature.icon}
-              <p className='text-[20px] font-popins font-medium'>{feature.text}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -269,4 +203,5 @@ const Course = () => {
 
 };
 
-export default Course;
+export default MyCourseDetail;
+
