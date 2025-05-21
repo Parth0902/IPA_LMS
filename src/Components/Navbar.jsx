@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Badge from '@mui/material/Badge';
-import { Heart, ShoppingCart, AlignJustify, UserRound } from 'lucide-react';
+import {ShoppingCart, AlignJustify, UserRound } from 'lucide-react';
 import Logo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 import { useCart } from '../Context/CartContext';
 
 const Navbar = () => {
-  const { logout, isAuthenticated } = useAuth();
+  const { logout, isAuthenticated, token } = useAuth();
   const [visible, setVisible] = useState(false);
   const { cartItems } = useCart();
 
@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className='flex flex-row'>
           <AlignJustify className='lg:hidden relative top-5 mr-10' onClick={OpenNav} />
           <Link className='flex flex-1 w-full items-center gap-3' to={'/'}>
-            <img src={Logo} alt="" className='h-16'/>
+            <img src={Logo} alt="" className='h-16' />
             <h1 className='text-2xl font-semibold'>INDIAN PODIATRY ASSOCIATION</h1>
           </Link>
         </div>
@@ -47,16 +47,15 @@ const Navbar = () => {
           <Link className='font-SubHeading text-lg' to={'/myCourses'}>MyLearing</Link>
           <Link className='font-SubHeading text-lg' to={'/courses'}>Courses</Link>
           <Link className='font-SubHeading text-lg' to={'/contactUs'}>Contact Us</Link>
-          <Heart />
           <Badge badgeContent={cartCount} color="primary" overlap="circular">
             <Link className='font-SubHeading text-lg' to={'/cart'}>
               <ShoppingCart />
             </Link>
           </Badge>
           <div className='flex gap-3 items-center'>
-            <div className='bg-grey-400 rounded-lg'>
-              <UserRound />
-            </div>
+            {isAuthenticated && 
+              <Link to={`/profile`} className='font-SubHeading text-lg'><UserRound /></Link>
+            }
             {
               isAuthenticated ?
                 <button className='bg-black py-1 px-3 rounded-md text-white' onClick={logout} >Logout</button>

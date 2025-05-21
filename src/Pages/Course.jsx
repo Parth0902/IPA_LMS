@@ -1,11 +1,11 @@
 import Rating from '@mui/material/Rating';
 import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
 import styled from '@emotion/styled';
-import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown, IndianRupee } from 'lucide-react';
+import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown, IndianRupee, VideoIcon } from 'lucide-react';
 import Reviews from '../Components/course/Reviews';
 import { useQuery } from '@tanstack/react-query';
 import { useApi } from '../hooks/useApi';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Context/AuthContext';
 import { useCart } from '../Context/CartContext';
@@ -66,7 +66,7 @@ const StyledAccordionDetails = styled(AccordionDetails)`
 `;
 
 const Course = () => {
-  const { token } = useAuth();
+  const { token, userId } = useAuth();
   const { addItem } = useCart();
   const { courseId } = useParams();
   const apiService = useApi();
@@ -78,6 +78,14 @@ const Course = () => {
     },
     enabled: !!courseId,
   });
+
+  // const { data: userData } = useQuery({
+  //   queryKey: ['userData', userId], 
+  //   queryFn: async () => {
+  //     return await apiService({ method: 'GET', endpoint: '/getCart', token });
+  //   },
+  //   enabled: !!userId,
+  // });
 
   const handleAddToCart = async () => {
     if (!token) {
@@ -180,14 +188,23 @@ const Course = () => {
           <p className='font-SubHeading text-[18px] text-justify'>{courseData.courseDescription}</p>
 
           <div className='flex justify-between md:items-center flex-col md:flex-row '>
-            <div className='flex gap-2 text-[20px] items-end'>
-              <p className=' font-semibold'>Price :</p>
-              <div className='flex gap-1 items-center'>
-                <IndianRupee size={20} />
-                <span>{courseData.coursePrice}/-</span>
-                <span className='text-sm'>(excl. G.S.T)</span>
-              </div>
-            </div>
+
+            {token ?
+              <Link to={`/myCourse/${courseId}/lectures`} className='flex gap-3 items-center'>
+                <div className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'>
+                  Go To Lectures
+                  <VideoIcon color="#ffffff" /></div>
+              </Link>
+              :
+              <div className='flex gap-2 text-[20px] items-end'>
+                <p className=' font-semibold'>Price :</p>
+                <div className='flex gap-1 items-center'>
+                  <IndianRupee size={20} />
+                  <span>{courseData.coursePrice}/-</span>
+                  <span className='text-sm'>(excl. G.S.T)</span>
+                </div>
+              </div>}
+
 
             <div className='flex gap-3 items-center'>
               <p className='text-[20px] font-bold'>Ratings</p>
@@ -195,13 +212,15 @@ const Course = () => {
             </div>
           </div>
 
-          <button
-            className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'
-            onClick={handleAddToCart}
-          >
-            Add to Cart
-            <ShoppingCart color="#ffffff" />
-          </button>
+          {!token &&
+            <button
+              className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+              <ShoppingCart color="#ffffff" />
+            </button>
+          }
         </div>
       </section>
 

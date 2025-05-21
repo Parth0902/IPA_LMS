@@ -17,6 +17,7 @@ import MyCourse from './Pages/MyCourse';
 import PrivacyPolicy from './Pages/policy/PrivacyPolicy';
 import TermsAndConditions from './Pages/policy/TermsAndConditions';
 import RefundPolicy from './Pages/policy/RefundPolicy';
+import Profile from './Pages/Profile';
 import MyCourseDetail from './Pages/MyCourseDetail';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/myCourses" element={<Layout><MyLearing /></Layout>} />
           <Route path="/myCourse/:courseId" element={<Layout><MyCourseDetail /></Layout>} />
           <Route path="/myCourse/:courseId/lectures" element={<Layout><MyCourse /></Layout>} />
+          <Route path="/profile/:userId" element={<Layout><Profile/></Layout>} />
         </Route>
         {/* General routes */}
         <Route path="/reset-password/:code" element={<ResetPassword />} />
