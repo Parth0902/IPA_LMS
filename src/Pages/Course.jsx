@@ -1,12 +1,11 @@
-import React from 'react'
 import Rating from '@mui/material/Rating';
 import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
 import styled from '@emotion/styled';
-import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown, IndianRupee } from 'lucide-react';
+import { ShoppingCart, NotebookPen, Newspaper, Video, Trophy, Infinity, BookMarked, ChevronDown, IndianRupee, VideoIcon } from 'lucide-react';
 import Reviews from '../Components/course/Reviews';
 import { useQuery } from '@tanstack/react-query';
 import { useApi } from '../hooks/useApi';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../Context/AuthContext';
 import { useCart } from '../Context/CartContext';
@@ -31,7 +30,6 @@ const StyledAccordion = styled(Accordion)`
     display: none;
   }
 `;
-
 
 const StyledAccordionSummary = styled(AccordionSummary)`
   padding: 0 24px;
@@ -67,11 +65,8 @@ const StyledAccordionDetails = styled(AccordionDetails)`
   border-top: 1px solid #e5e7eb;
 `;
 
-
-
-
 const Course = () => {
-  const { token } = useAuth();
+  const { token, userId } = useAuth();
   const { addItem } = useCart();
   const { courseId } = useParams();
   const apiService = useApi();
@@ -81,7 +76,16 @@ const Course = () => {
     queryFn: async () => {
       return await apiService({ method: 'GET', endpoint: `/getCourseData/${courseId}` });
     },
+    enabled: !!courseId,
   });
+
+  // const { data: userData } = useQuery({
+  //   queryKey: ['userData', userId], 
+  //   queryFn: async () => {
+  //     return await apiService({ method: 'GET', endpoint: '/getCart', token });
+  //   },
+  //   enabled: !!userId,
+  // });
 
   const handleAddToCart = async () => {
     if (!token) {
@@ -166,7 +170,6 @@ const Course = () => {
     },
   ];
 
-
   // Top of your component file - define reusable utility classes
   const sectionHeading = 'font-Inter text-[40px] font-semibold text-center';
   const subText = 'text-[18px] text-gray-800 leading-relaxed';
@@ -174,26 +177,34 @@ const Course = () => {
 
   return (
     <div className='mt-24'>
-
       {/* Hero Section */}
       <section className='flex flex-col lg:flex-row justify-around xl:mx-[120px] py-12 gap-10'>
-        <div className='lg:w-5/12'>
+        <div className='lg:w-6/12 pt-4'>
           <img src={courseData.courseThumbNail} alt={courseData.courseName} className="rounded-xl w-full" />
         </div>
-        <div className='lg:w-6/12 space-y-4'>
+        <div className='lg:w-5/12 space-y-4'>
           <h4 className='font-Inter text-[40px] font-semibold'>{courseData.courseName}</h4>
           <h2 className='font-popins text-[22px]'>{courseData.heading}</h2>
           <p className='font-SubHeading text-[18px] text-justify'>{courseData.courseDescription}</p>
 
           <div className='flex justify-between md:items-center flex-col md:flex-row '>
-            <div className='flex gap-2 text-[20px] items-end'>
-              <p className=' font-semibold'>Price :</p>
-              <div className='flex gap-1 items-center'>
-                <IndianRupee size={20} />
-                <span>{courseData.coursePrice}/-</span>
-                <span className='text-sm'>(excl. G.S.T)</span>
-              </div>
-            </div>
+
+            {token ?
+              <Link to={`/myCourse/${courseId}/lectures`} className='flex gap-3 items-center'>
+                <div className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'>
+                  Go To Lectures
+                  <VideoIcon color="#ffffff" /></div>
+              </Link>
+              :
+              <div className='flex gap-2 text-[20px] items-end'>
+                <p className=' font-semibold'>Price :</p>
+                <div className='flex gap-1 items-center'>
+                  <IndianRupee size={20} />
+                  <span>{courseData.coursePrice}/-</span>
+                  <span className='text-sm'>(excl. G.S.T)</span>
+                </div>
+              </div>}
+
 
             <div className='flex gap-3 items-center'>
               <p className='text-[20px] font-bold'>Ratings</p>
@@ -201,13 +212,15 @@ const Course = () => {
             </div>
           </div>
 
-          <button
-            className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'
-            onClick={handleAddToCart}
-          >
-            Add to Cart
-            <ShoppingCart color="#ffffff" />
-          </button>
+          {!token &&
+            <button
+              className='bg-black text-white py-3 px-4 font-medium rounded-lg flex gap-3 items-center'
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+              <ShoppingCart color="#ffffff" />
+            </button>
+          }
         </div>
       </section>
 
@@ -240,7 +253,7 @@ const Course = () => {
       <section className='xl:px-[120px] pb-12 flex flex-col gap-6 items-center'>
         <h2 className={sectionHeading}>Modules of this course</h2>
         {chapters.map((chapter) => (
-          <StyledAccordion key={chapter._id} className='w-full max-w-[900px]'>
+          <StyledAccordion key={chapter._id} className='w-full'>
             <StyledAccordionSummary expandIcon={<ChevronDown />}>
               <div className='flex w-full justify-between px-6 items-center'>
                 <p className='text-[20px] font-medium'>{chapter.ModuleName}</p>

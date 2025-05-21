@@ -22,7 +22,7 @@ const GiveReview = ({ courseId, token }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6 h-full">
       <Typography variant="h6" className="!text-lg !font-semibold">
         Give Your Review
       </Typography>
@@ -31,7 +31,7 @@ const GiveReview = ({ courseId, token }) => {
         name="rating"
         value={rating}
         onChange={(event, newValue) => setRating(newValue)}
-        sx={{ fontSize: '2rem', color: 'gold' }}
+        sx={{ fontSize: '2.6rem', color: 'gold' }}
       />
 
       <TextField
@@ -45,6 +45,7 @@ const GiveReview = ({ courseId, token }) => {
         InputProps={{
           sx: {
             borderRadius: '0.5rem',
+            height: '250px',
           },
         }}
       />
