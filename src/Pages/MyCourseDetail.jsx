@@ -1,10 +1,10 @@
 import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
 import styled from '@emotion/styled';
-import { ChevronDown, VideoIcon, NotebookPen} from 'lucide-react';
+import { ChevronDown, VideoIcon, NotebookPen } from 'lucide-react';
 import Reviews from '../Components/course/Reviews';
 import { useQuery } from '@tanstack/react-query';
 import { useApi } from '../hooks/useApi';
-import {Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ShowMoreText from '../Components/ShowMoreText';
 
 const StyledAccordion = styled(Accordion)`
@@ -58,6 +58,9 @@ const StyledAccordionDetails = styled(AccordionDetails)`
   background-color: #f9fafb;
   padding: 24px;
   font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   color: #374151;
   border-top: 1px solid #e5e7eb;
 `;
@@ -115,37 +118,40 @@ const MyCourseDetail = () => {
           <StyledAccordion key={chapter._id} className='w-full'>
             <StyledAccordionSummary expandIcon={<ChevronDown />}>
               <div className='flex w-full justify-between px-6 items-center'>
-                <p className='text-[20px] font-medium'>{chapter.ModuleName}</p>
+                <p className='text-[22px] font-medium'>{chapter.ModuleName}</p>
               </div>
             </StyledAccordionSummary>
             <Divider />
             <StyledAccordionDetails>
               <div className='px-2 md:px-4'>
-                <h4 className='text-[18px] font-medium py-2'>Module Objective</h4>
+                <h4 className='text-[20px] font-medium py-2'>Module Objective</h4>
                 <ul className='list-disc px-6 pb-4'>
                   {chapter.ModuleDescription?.split('•')
                     .filter(point => point.trim() !== '')
                     .map((point, index) => (
-                      <li key={index} className="text-[18px] text-gray-800 leading-relaxed">
+                      <li key={index} className="text-[17px] text-gray-800 leading-relaxed">
                         {point.trim()}
                       </li>
                     ))}
                 </ul>
-                <h4 className='text-[18px] font-medium py-2'>Module Videos</h4>
+                <h4 className='text-[20px] font-medium py-2'>Module Videos</h4>
                 {chapter.Videos?.map((video, index) => (
                   <div key={index} className='flex items-center gap-4 py-2'>
                     <VideoIcon size={24} />
-                    <p className='text-[18px] font-medium text-gray-800'>{video.videoName}</p>
+                    <p className='text-[17px] font-medium text-gray-800'>{video.videoName}</p>
                   </div>
                 ))}
-                <h4 className='text-[18px] font-medium py-2'>Module Assessment</h4>
+                <h4 className='text-[20px] font-medium py-2'>Module Assessment</h4>
                 {chapter.quizes?.map((quiz, index) => (
                   <div key={index} className='flex items-center gap-4 py-2'>
                     <NotebookPen size={24} />
-                    <p className='text-[18px] font-medium text-gray-800'>{quiz.quizName}</p>
+                    <p className='text-[17px] font-medium text-gray-800'>{quiz.quizName}</p>
                   </div>
                 ))}
               </div>
+              <Link to={`/myCourse/${courseId}/lectures`} className=' text-center bg-gray-800 hover:bg-black text-white rounded-lg p-3'>
+                Go to Lectures
+              </Link>
             </StyledAccordionDetails>
           </StyledAccordion>
         ))}

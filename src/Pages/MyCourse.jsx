@@ -13,6 +13,7 @@ import GiveReview from '../Components/course/GiveReview';
 import { toast } from 'react-toastify';
 
 export default function CoursePlayer() {
+  const [visibleModuleIndex, setVisibleModuleIndex] = useState(0);
   const [activeChapter, setActiveChapter] = useState(0);
   const [activeVideo, setActiveVideo] = useState('');
   const [iframeUrl, setIframeUrl] = useState('');
@@ -168,79 +169,91 @@ export default function CoursePlayer() {
           </div>
         </aside>
       </div>
+
+      {/* Course Modules */}
       <div className="mt-4 bg-white shadow m-6 p-6 rounded-lg">
-        <div className="sticky top-0 py-6 bg-white z-10 border-b">
-          <h2 className="text-2xl font-bold">Modules of FDFM</h2>
-        </div>
-        <div className="space-y-4">
-          {courseData.chapters.map((chapter, chapterIndex) => (
-            <Accordion
-              key={chapter._id}
-              disableGutters
-              elevation={0}
-              sx={{
-                boxShadow: 'none',
-                '&:before': { display: 'none' },
-              }}
-            >
-              <AccordionSummary
-                expandIcon={<span className="text-black">▼</span>}
-                aria-controls={`panel${chapterIndex}-content`}
-                id={`panel${chapterIndex}-header`}
-                sx={{
-                  padding: '12px 16px',
-                  borderBottom: '1px solid #eee',
-                  '&:hover': { backgroundColor: '#f9fafb' },
-                }}
+        <div className="sticky top-0 py-6 bg-white z-10 border-b flex justify-between items-center">
+          <h2 className="text-2xl font-bold">
+            {`${courseData.chapters[visibleModuleIndex]?.ModuleName}`}
+          </h2>
+          <div className="flex gap-4">
+            {visibleModuleIndex > 0 && (
+              <button
+                onClick={() => setVisibleModuleIndex((prev) => prev - 1)}
+                className="bg-black text-white py-2 px-5 rounded-md text-base"
               >
-                <div>
-                  <h3 className="font-semibold text-lg">{chapter.ModuleName}</h3>
-                </div>
-              </AccordionSummary>
+                ← Previous Module
+              </button>
+            )}
+            {visibleModuleIndex < courseData.chapters.length - 1 && (
+              <button
+                onClick={() => setVisibleModuleIndex((prev) => prev + 1)}
+                className="bg-black text-white py-2 px-5 rounded-md text-base"
+              >
+                Next Module →
+              </button>
+            )}
+          </div>
+        </div>
 
-              <AccordionDetails sx={{ padding: 0 }}>
-                {chapter.Videos.map((video) => (
-                  <button
-                    key={video.videoId}
-                    onClick={() => selectVideo(chapterIndex, video.videoId)}
-                    className={`w-full text-left flex items-start gap-3 p-3 mx-2 my-1 rounded-md transition ${activeVideo === video.videoId
-                      ? 'bg-blue-50 text-blue-600 font-medium'
-                      : 'hover:bg-gray-50 text-gray-700'
-                      }`}
-                  >
-                    <VideoIcon
-                      size={18}
-                      className="text-slate-500 mt-1 shrink-0"
-                    />
-                    <div className="flex flex-col text-base">
-                      <span>{video.videoName}</span>
-                      <div className="flex items-center text-sm text-gray-500 mt-1">
-                        <Play size={12} className="mr-1" />
-                        <span>{video.videoDuration}</span>
-                      </div>
+        <div className="space-y-4">
+          <Accordion
+            key={courseData.chapters[visibleModuleIndex]._id}
+            defaultExpanded
+            disableGutters
+            elevation={0}
+            sx={{
+              boxShadow: 'none',
+              '&:before': { display: 'none' },
+            }}
+          >
+            <AccordionDetails sx={{ padding: 0 }}>
+              {courseData.chapters[visibleModuleIndex].Videos.map((video) => (
+                <button
+                  key={video.videoId}
+                  onClick={() =>
+                    selectVideo(visibleModuleIndex, video.videoId)
+                  }
+                  className={`w-full text-left flex items-start gap-3 p-3 mx-2 my-1 rounded-md transition ${activeVideo === video.videoId
+                    ? 'bg-blue-50 text-blue-600 font-medium'
+                    : 'hover:bg-gray-50 text-gray-700'
+                    }`}
+                >
+                  <VideoIcon
+                    size={18}
+                    className="text-slate-500 mt-1 shrink-0"
+                  />
+                  <div className="flex flex-col text-base">
+                    <span>{video.videoName}</span>
+                    <div className="flex items-center text-sm text-gray-500 mt-1">
+                      <Play size={12} className="mr-1" />
+                      <span>{video.videoDuration}</span>
                     </div>
-                  </button>
-                ))}
+                  </div>
+                </button>
+              ))}
 
-                {chapter.quizes?.map((quiz) => (
-                  <a
-                    key={quiz.quizId}
-                    href={quiz.quizLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-start p-3 mx-2 my-1 rounded-md border-t border-gray-100 hover:bg-gray-50"
-                  >
-                    <span className="mr-3">📝</span>
-                    <div className="text-base">
-                      <p className="font-medium text-gray-800">{quiz.quizName}</p>
-                    </div>
-                  </a>
-                ))}
-              </AccordionDetails>
-            </Accordion>
-          ))}
+              {courseData.chapters[visibleModuleIndex].quizes?.map((quiz) => (
+                <a
+                  key={quiz.quizId}
+                  href={quiz.quizLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start p-3 mx-2 my-1 rounded-md border-t border-gray-100 hover:bg-gray-50"
+                >
+                  <span className="mr-3">📝</span>
+                  <div className="text-base">
+                    <p className="font-medium text-gray-800">
+                      {quiz.quizName}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </AccordionDetails>
+          </Accordion>
         </div>
       </div>
+
     </div>
   );
 }
