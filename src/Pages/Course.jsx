@@ -204,12 +204,6 @@ const Course = () => {
                   <span className='text-sm'>(excl. G.S.T)</span>
                 </div>
               </div>}
-
-
-            <div className='flex gap-3 items-center'>
-              <p className='text-[20px] font-bold'>Ratings</p>
-              <Rating value={courseData.rating || 4} readOnly precision={0.5} sx={{ fontSize: '2rem' }} />
-            </div>
           </div>
 
           {!token &&
@@ -279,7 +273,7 @@ const Course = () => {
       </section>
 
       {/* Reviews Section */}
-      <section className='bg-gray-50 py-[60px]'>
+      <section className='bg-gray-50 py-[60px] lg:px-[120px]'>
         <h2 className='font-Inter text-[42px] font-semibold text-center'>Course Reviews</h2>
         <Reviews />
       </section>
