@@ -113,7 +113,12 @@ const MyCourseDetail = () => {
 
       {/* Course Details Section */}
       <section className='xl:px-24 px-6 py-12 bg-slate-100'>
-        <h2 className="text-[36px] md:text-[40px] font-semibold text-center mb-10">Modules of this course</h2>
+        <div className='flex flex-row justify-between items-center'>
+          <h2 className="text-[36px] md:text-[40px] font-semibold text-center mb-10">Modules of this course</h2>
+          <Link to={`/myCourse/${courseId}/lectures`} className=' text-center bg-gray-800 hover:bg-black text-white rounded-lg p-3'>
+            Go to Lectures
+          </Link>
+        </div>
         {chapters.map((chapter) => (
           <StyledAccordion key={chapter._id} className='w-full'>
             <StyledAccordionSummary expandIcon={<ChevronDown />}>
@@ -149,9 +154,6 @@ const MyCourseDetail = () => {
                   </div>
                 ))}
               </div>
-              <Link to={`/myCourse/${courseId}/lectures`} className=' text-center bg-gray-800 hover:bg-black text-white rounded-lg p-3'>
-                Go to Lectures
-              </Link>
             </StyledAccordionDetails>
           </StyledAccordion>
         ))}
