@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Play, VideoIcon } from 'lucide-react';
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@mui/material';
+import { Play, VideoIcon, CircleCheckBig } from 'lucide-react';
+import { Accordion, AccordionDetails } from '@mui/material';
 import { useAuth } from '../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
 import GiveReview from '../Components/course/GiveReview';
 import { toast } from 'react-toastify';
-
+import { loadPlayerScript } from '../util';
 export default function CoursePlayer() {
   const [activeModuleIndex, setActiveModuleIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState('');
@@ -26,7 +22,7 @@ export default function CoursePlayer() {
     data: courseData,
     isFetching,
   } = useQuery({
-    queryKey: ['courseData'],
+    queryKey: ['courseData', courseId],
     queryFn: async () => {
       const response = await apiService({
         method: 'GET',
@@ -38,7 +34,7 @@ export default function CoursePlayer() {
     enabled: !!token,
   });
 
-  const { data: progress } = useQuery({
+  const { data: progress, refetch } = useQuery({
     queryKey: ['progress', courseId],
     queryFn: async () => {
       const response = await apiService({
@@ -162,6 +158,10 @@ export default function CoursePlayer() {
   //     ]
   // }
 
+  //
+
+  //
+
   useEffect(() => {
     if (courseData && courseData.chapters?.length > 0) {
       const currentModule = courseData.chapters[activeModuleIndex];
@@ -173,10 +173,28 @@ export default function CoursePlayer() {
     }
   }, [courseData, activeModuleIndex]);
 
+  useEffect(() => {
+    loadPlayerScript()
+      .then(() => {
+        const player = new window.playerjs.Player('bunny-stream-embed');
+
+        player.on('ready', () => {
+          console.log('Player is ready');
+
+          player.on('ended', () => {
+            console.log('Video has ended');
+            markVideoComplete();
+          });
+        });
+      })
+      .catch((error) => {
+        console.error('Failed to load Player.js:', error);
+      });
+  }, [iframeUrl]);
 
   const selectVideo = async (videoId) => {
     setActiveVideo(videoId);
-
+    setIframeUrl('');
     const response = await apiService({
       method: 'GET',
       endpoint: `/iframe/${videoId}`,
@@ -184,6 +202,29 @@ export default function CoursePlayer() {
     });
     setIframeUrl(response.iframeUrl);
   };
+
+  const markVideoComplete = async () => {
+    let payload = {
+      courseId: courseId,
+      moduleId: courseData.chapters[activeModuleIndex]._id,
+      videoId: activeVideo,
+    };
+    console.log('Payload:', payload);
+    await apiService({
+      method: 'POST',
+      endpoint: `/updateProgress`,
+      data: payload,
+      token,
+    });
+    refetch();
+  };
+
+  const isCurrentModuleCompleted = () => {
+    const module = progress?.moduleProgress?.[activeModuleIndex];
+    if (!module) return false;
+    return module.videoProgress.every((v) => v.completed);
+  };
+
 
   if (!courseData || isFetching) {
     return (
@@ -215,6 +256,8 @@ export default function CoursePlayer() {
           <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow">
             {iframeUrl ? (
               <iframe
+                id="bunny-stream-embed"
+                key={iframeUrl}
                 title="Course Video"
                 src={iframeUrl}
                 className="w-full h-full rounded-xl"
@@ -255,15 +298,13 @@ export default function CoursePlayer() {
                 <h2 className="text-2xl font-semibold mb-2">
                   {currentVideo.videoName || 'Video Title'}
                 </h2>
-                <p className="text-lg text-gray-700 mb-3">
+                <ul className="text-lg text-gray-700 mb-3 list-disc pl-5">
                   {currentVideo.videoDescription?.split('•')
-                    .filter(point => point.trim() !== '')
+                    .filter((point) => point.trim() !== '')
                     .map((point, index) => (
-                      <li key={index} className='text-[18px] text-gray-800 leading-relaxed'>
-                        {point.trim()}
-                      </li>
-                    )) || 'Video description will appear here.'}
-                </p>
+                      <li key={index}>{point.trim()}</li>
+                    ))}
+                </ul>
                 <p className="text-base text-gray-500">
                   Duration: {currentVideo.videoDuration || 'N/A'}
                 </p>
@@ -311,11 +352,16 @@ export default function CoursePlayer() {
             {activeModuleIndex < courseData.chapters.length - 1 && (
               <button
                 onClick={() => setActiveModuleIndex((prev) => prev + 1)}
-                className="truncate bg-black text-white py-2 px-5 rounded-md text-base"
+                className={`truncate py-2 px-5 rounded-md text-base ${isCurrentModuleCompleted()
+                    ? 'bg-black text-white'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                disabled={!isCurrentModuleCompleted()}
               >
                 Next Module →
               </button>
             )}
+
           </div>
         </div>
 
@@ -342,10 +388,20 @@ export default function CoursePlayer() {
                     : 'hover:bg-gray-50 text-gray-700'
                     }`}
                 >
-                  <VideoIcon
-                    size={18}
-                    className="text-slate-500 mt-1 shrink-0"
-                  />
+                  {progress?.moduleProgress[activeModuleIndex]?.videoProgress?.find(
+                    (v) => v.videoId === video.videoId
+                  )?.completed ? (
+                    <CircleCheckBig
+                      size={18}
+                      className="text-green-500 mt-1 shrink-0"
+                    />
+                  ) : (
+                    <VideoIcon
+                      size={18}
+                      className="text-slate-500 mt-1 shrink-0"
+                    />
+                  )}
+
                   <div className="flex flex-col text-base">
                     <span>{video.videoName}</span>
                     <div className="flex items-center text-sm text-gray-500 mt-1">
