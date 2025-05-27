@@ -12,7 +12,7 @@ const OurTeam = () => {
         <section className="max-w-6xl mx-auto px-4 py-12">
             <div className="text-center pb-12">
                 <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-gray-900 font-heading">
-                    Know our FDFM faculties
+                    Know our FDFM course Faculty
                 </h1>
             </div>
 
@@ -20,7 +20,7 @@ const OurTeam = () => {
                 modules={[Autoplay, Navigation]}
                 spaceBetween={30}
                 slidesPerView={1}
-                autoplay={{ delay: 2500, disableOnInteraction: false }}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
                 navigation
                 breakpoints={{
                     640: { slidesPerView: 2 },
