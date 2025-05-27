@@ -32,7 +32,7 @@ const Reviews = () => {
   return (
     <div className="flex flex-col gap-10 bg-gray-50 px-4 md:px-8 lg:px-16 py-10">
       <div className="w-full flex flex-col lg:flex-row gap-10">
-        <div className="lg:w-3/5 space-y-6 h-[600px] overflow-y-auto pr-2">
+        <div className="space-y-6 h-[600px] overflow-y-auto pr-2">
           {reviewsData.map((review) => (
             <div
               key={review.id}
@@ -41,19 +41,12 @@ const Reviews = () => {
               <div className="flex items-center gap-4">
                 <CircleUser size={31} />
                 <div>
-                  <p className="font-popins text-2xl font-semibold text-gray-800">{review.userName}</p>
+                  <p className="font-popins text-xl font-semibold text-gray-800">{review.userName}</p>
                 </div>
               </div>
-              <p className="font-popins text-base text-gray-700 leading-relaxed">{review.comment}</p>
+              <p className="font-popins text-md text-gray-700 leading-relaxed">{review.comment}</p>
             </div>
           ))}
-        </div>
-        <div className="lg:w-2/5 flex items-center justify-center">
-          <img
-            src={image}
-            alt="Faculty"
-            className="max-h-[600px] w-auto h-auto object-contain"
-          />
         </div>
       </div>
     </div>

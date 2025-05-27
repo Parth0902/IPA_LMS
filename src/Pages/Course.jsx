@@ -223,8 +223,19 @@ const Course = () => {
 
       {/* Reviews Section */}
       <section className='bg-gray-50 py-16'>
-        <h2 className='text-3xl md:text-4xl font-semibold text-center'>Course Reviews</h2>
-        <Reviews />
+        <div className="flex lg:flex-row flex-col">
+          <div className="lg:w-3/5 flex flex-col items-center justify-center">
+            <h2 className='text-3xl md:text-4xl font-semibold text-center'>Course Reviews</h2>
+            <Reviews />
+          </div>
+          <div className="lg:w-2/5 flex items-center justify-center">
+            <img
+              src='https://IPA-Images.b-cdn.net/Assets/faculty.jpg'
+              alt="Faculty"
+              className="max-h-[600px] w-auto h-auto object-contain"
+            />
+          </div>
+        </div>
       </section>
     </div>
   );

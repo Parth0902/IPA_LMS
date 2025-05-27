@@ -54,19 +54,17 @@ const SignUp = () => {
 
   return (
     <div className="flex min-h-screen">
-      <div className="w-full md:w-1/2 flex items-center justify-center px-6 bg-white">
-        <div className="w-full max-w-md">
-
-          <div className="mb-12">
-            <div className="text-2xl font-bold mb-5 flex items-center gap-2">
-              <img alt='logo' src='https://IPA-Images.b-cdn.net/Assets/logo.png' className='h-10' />
+      <div className="w-full md:w-1/2 flex items-center justify-center px-6 bg-slate-200">
+        <div className="w-full max-w-md px-6 py-10 bg-white shadow-lg rounded-lg">
+          <div className="mb-6 text-center">
+            <div className="text-2xl font-bold mb-4 flex flex-col items-center gap-2">
+              <img alt='logo' src='https://IPA-Images.b-cdn.net/Assets/logo.png' className='h-[20vh]' />
               <h1>IPA EDUCATION ACADEMY</h1>
             </div>
             <p className="text-gray-700 text-sm">Sign Up to IPA Education Academy</p>
             <p className="text-gray-500 text-xs">The faster you sign up, the faster we get to work.</p>
           </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <input
                 id="Name"

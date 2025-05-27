@@ -25,7 +25,7 @@ export default function Cart() {
 
   return (
     <div className="w-full py-6 flex flex-col  mt-20 px-10 h-[80vh]">
-          <h1 className='text-3xl text-left font-bold px-6 mt-6'>Course cart</h1>
+      <h1 className='text-3xl text-left font-bold px-6 mt-6'>Course cart</h1>
       <div className="w-full flex flex-col md:flex-row md:items-start md:gap-12 md:justify-between p-6 ">
         <div className="w-full md:w-3/4 overflow-x-auto">
           <table className="w-full border-collapse">
@@ -46,7 +46,7 @@ export default function Cart() {
                         <h3 className="font-medium">{item.name}</h3>
                         <p className="text-gray-600">Price: ₹ {item.price.toFixed(2)}</p>
                         <button
-                        type='button'
+                          type='button'
                           onClick={(event) => handleRemove(event, item.id)}
                           className="text-slate-700 text-sm hover:text-slate-950"
                         >
@@ -66,7 +66,7 @@ export default function Cart() {
                     />
                   </td>
                   <td className="text-right pr-4">
-                    ${(item.price).toFixed(2)}
+                    ₹{(item.price).toFixed(2)}
                   </td>
                 </tr>
               ))}
@@ -87,9 +87,9 @@ export default function Cart() {
             <span>Total</span>
             <span>₹{total.toFixed(2)}</span>
           </div>
-          <button className="mt-4 w-full bg-gray-700 text-white py-3 px-4 rounded hover:bg-gray-950 transition-colors flex items-center justify-center gap-2">
+          <a href="https://forms.gle/kf4pTfudR3zAWtmPA" target="_blank" rel="noopener noreferrer" className="mt-4 w-full bg-gray-700 text-white py-3 px-4 rounded hover:bg-gray-950 transition-colors flex items-center justify-center gap-2">
             Proceed to checkout →
-          </button>
+          </a>
         </div>
       </div>
     </div>

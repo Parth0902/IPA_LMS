@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Badge from '@mui/material/Badge';
-import {ShoppingCart, AlignJustify, UserRound } from 'lucide-react';
+import { ShoppingCart, AlignJustify, UserRound } from 'lucide-react';
 import Logo from '../Assets/logo.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
@@ -31,10 +31,13 @@ const Navbar = () => {
           visible &&
           <div className='flex flex-col gap-4 flex-1 text-center lg:items-center underline underline-offset-4'>
             <Link className='font-SubHeading text-lg border-solid' to={'/'}>Home</Link>
+            <Link className='font-SubHeading text-lg border-solid' to={'/myCourses'}>MyLearing</Link>
             <Link className='font-SubHeading text-lg border-solid' to={'/courses'}>Courses</Link>
-            <Link className='font-SubHeading text-lg' to={'/contactUs'}>Contact Us</Link>
-            <h4 className='font-SubHeading text-lg'>Wish List</h4>
             <Link className='font-SubHeading text-lg' to={'/cart'} >Cart</Link>
+            {isAuthenticated &&
+              <Link to={`/profile`} className='font-SubHeading text-lg'>Profile</Link>
+            }
+            <Link className='font-SubHeading text-lg' to={'/contactUs'}>Contact Us</Link>
             {
               isAuthenticated ?
                 <button className='font-SubHeading text-lg' onClick={logout} >Logout</button>
@@ -53,7 +56,7 @@ const Navbar = () => {
             </Link>
           </Badge>
           <div className='flex gap-3 items-center'>
-            {isAuthenticated && 
+            {isAuthenticated &&
               <Link to={`/profile`} className='font-SubHeading text-lg'><UserRound /></Link>
             }
             {
