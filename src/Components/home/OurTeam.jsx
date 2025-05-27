@@ -12,7 +12,7 @@ const OurTeam = () => {
         <section className="max-w-6xl mx-auto px-4 py-12">
             <div className="text-center pb-12">
                 <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-gray-900 font-heading">
-                    Know our experienced faculties
+                    Know our FDFM faculties
                 </h1>
             </div>
 
