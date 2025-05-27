@@ -12,7 +12,7 @@ export default function Slider() {
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 2500,
+          delay: 6000,
           disableOnInteraction: false,
         }}
         pagination={{
@@ -22,6 +22,26 @@ export default function Slider() {
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper w-full h-full"
       >
+        <SwiperSlide className='w-full h-full bg-black'>
+          <video
+            src='https://IPA-Images.b-cdn.net/Assets/slider/Slidervdo1.mp4'
+            muted
+            autoPlay
+            loop
+            playsInline
+            className='w-full h-full object-cover'
+          />
+        </SwiperSlide>
+        <SwiperSlide className='w-full h-full bg-black'>
+          <video
+            src='https://IPA-Images.b-cdn.net/Assets/slider/Slidervdo2.mp4'
+            muted
+            autoPlay
+            loop
+            playsInline
+            className='w-full h-full object-cover'
+          />
+        </SwiperSlide>
         <SwiperSlide className='w-full h-full bg-black'>
           <img
             alt='slider1'
