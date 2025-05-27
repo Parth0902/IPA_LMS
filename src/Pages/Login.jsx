@@ -38,14 +38,14 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Left panel - login form */}
-      <div className="w-full md:w-1/2 flex items-center justify-center px-6 bg-white">
-        <div className="w-full max-w-md">
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-slate-200">
+        <div className="w-full max-w-md px-6 py-10 shadow-lg rounded-lg bg-white">
           {/* Branding */}
-          <div className="mb-12">
-            <div className="text-2xl font-bold mb-5 flex items-center gap-2">
-              <img alt='logo' src='https://IPA-Images.b-cdn.net/Assets/logo.png' className='h-10' />
+          <div className="mb-12 text-center">
+            <div className="text-2xl font-bold mb-5 flex flex-col justify-center items-center gap-2">
+            <img alt='logo' src='https://IPA-Images.b-cdn.net/Assets/logo.png' className='h-[20vh]' />
               <h1>IPA EDUCATION ACADEMY</h1>
             </div>
             <p className="text-gray-700 text-sm">Login to Your Account</p>
@@ -55,23 +55,21 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <input
-                id="email"
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black"
+                className="w-full rounded-lg border-b border-gray-300 p-2 focus:outline-none focus:border-black"
                 required
               />
             </div>
             <div>
               <input
-                id="password"
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black"
+                className="w-full rounded-lg border-b border-gray-300 p-2 focus:outline-none focus:border-black"
                 required
               />
             </div>
@@ -96,14 +94,16 @@ const Login = () => {
       </div>
 
       {/* Right panel - image */}
-      <div className="hidden md:flex w-1/2 items-center justify-center relative">
-        <img
-          src="https://IPA-Images.b-cdn.net/Assets/login.webp" 
-          alt="Welcome"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <h1 className="text-white text-4xl font-bold text-center">Welcome Back!</h1>
+      <div className="hidden md:flex w-1/2 h-full">
+        <div className="relative w-full h-full">
+          <img
+            src="https://IPA-Images.b-cdn.net/Assets/login.webp"
+            alt="Welcome"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <h1 className="text-white text-4xl font-bold text-center">Welcome Back!</h1>
+          </div>
         </div>
       </div>
     </div>
