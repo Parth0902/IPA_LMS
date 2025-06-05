@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { useApi } from '../hooks/useApi';
 
 const SignUp = () => {
-  const apiService = useApi()
+  const apiService = useApi();
+  const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -38,6 +39,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!validateForm()) return;
 
     const res = await apiService({
@@ -46,6 +48,7 @@ const SignUp = () => {
       data: { name: Name, email, password },
     });
 
+    setLoading(false);
     if (res) {
       toast.success('Signup successful! Please login.');
       navigate('/login');
@@ -112,9 +115,33 @@ const SignUp = () => {
 
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition"
+              disabled={isLoading}
+              className={`w-full flex justify-center items-center gap-2 bg-black text-white py-2 rounded-md transition ${loading ? 'bg-gray-700 cursor-not-allowed' : 'hover:bg-gray-800'
+                }`}
             >
-              Sign Up
+              {isLoading && (
+                <svg
+                  className="animate-spin h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+              )}
+              {isLoading ? 'Signing Up...' : 'Sign Up'}
             </button>
 
             <div className="text-center text-sm text-gray-500 mt-2">

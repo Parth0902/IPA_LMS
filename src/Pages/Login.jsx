@@ -8,6 +8,7 @@ const Login = () => {
   const apiService = useApi();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsloading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsloading(true);
     if (!validateForm()) return;
 
     const res = await apiService({
@@ -29,7 +31,7 @@ const Login = () => {
       endpoint: '/login',
       data: { email, password },
     });
-
+    setIsloading(false);
     if (res?.token) {
       login(res.token);
       toast.success('Login successful!');
@@ -45,7 +47,7 @@ const Login = () => {
           {/* Branding */}
           <div className="mb-12 text-center">
             <div className="text-2xl font-bold mb-5 flex flex-col justify-center items-center gap-2">
-            <img alt='logo' src='https://IPA-Images.b-cdn.net/Assets/logo.png' className='h-[20vh]' />
+              <img alt='logo' src='https://IPA-Images.b-cdn.net/Assets/logo.png' className='h-[20vh]' />
               <h1>IPA EDUCATION ACADEMY</h1>
             </div>
             <p className="text-gray-700 text-sm">Login to Your Account</p>
@@ -80,9 +82,33 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition"
+              disabled={isLoading}
+              className={`w-full flex justify-center items-center gap-2 bg-black text-white py-2 rounded-md transition ${loading ? 'bg-gray-700 cursor-not-allowed' : 'hover:bg-gray-800'
+                }`}
             >
-              Login
+              {isLoading && (
+                <svg
+                  className="animate-spin h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
+                </svg>
+              )}
+              {isLoading ? 'Logging ...' : 'Login'}
             </button>
 
             <div className="text-center text-sm text-gray-500 mt-2">
