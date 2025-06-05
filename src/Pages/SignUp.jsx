@@ -5,7 +5,7 @@ import { useApi } from '../hooks/useApi';
 
 const SignUp = () => {
   const apiService = useApi();
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -39,7 +39,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setIsloading(true);
     if (!validateForm()) return;
 
     const res = await apiService({
@@ -48,7 +48,7 @@ const SignUp = () => {
       data: { name: Name, email, password },
     });
 
-    setLoading(false);
+    setIsloading(false);
     if (res) {
       toast.success('Signup successful! Please login.');
       navigate('/login');
@@ -116,7 +116,7 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full flex justify-center items-center gap-2 bg-black text-white py-2 rounded-md transition ${loading ? 'bg-gray-700 cursor-not-allowed' : 'hover:bg-gray-800'
+              className={`w-full flex justify-center items-center gap-2 bg-black text-white py-2 rounded-md transition ${isLoading ? 'bg-gray-700 cursor-not-allowed' : 'hover:bg-gray-800'
                 }`}
             >
               {isLoading && (

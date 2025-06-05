@@ -83,7 +83,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full flex justify-center items-center gap-2 bg-black text-white py-2 rounded-md transition ${loading ? 'bg-gray-700 cursor-not-allowed' : 'hover:bg-gray-800'
+              className={`w-full flex justify-center items-center gap-2 bg-black text-white py-2 rounded-md transition ${isLoading ? 'bg-gray-700 cursor-not-allowed' : 'hover:bg-gray-800'
                 }`}
             >
               {isLoading && (
