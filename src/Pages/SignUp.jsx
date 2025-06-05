@@ -40,7 +40,10 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsloading(true);
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      setIsloading(false);
+      return;
+    }
 
     const res = await apiService({
       method: 'POST',
