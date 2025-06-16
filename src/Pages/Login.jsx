@@ -8,7 +8,7 @@ const Login = () => {
   const apiService = useApi();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -23,9 +23,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsloading(true);
+    setIsLoading(true);
     if (!validateForm()) {
-      setIsloading(false);
+      setIsLoading(false);
       return;
     }
 
@@ -34,10 +34,9 @@ const Login = () => {
       endpoint: '/login',
       data: { email, password },
     });
-    setIsloading(false);
+    setIsLoading(false);
     if (res?.token) {
       login(res.token);
-      toast.success('Login successful!');
       navigate('/');
     }
   };

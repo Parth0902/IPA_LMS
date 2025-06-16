@@ -5,10 +5,13 @@ import { useAuth } from '../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
+import { useUser } from '../hooks/useUser';
 import GiveReview from '../Components/course/GiveReview';
 import { toast } from 'react-toastify';
 import { loadPlayerScript } from '../util';
+
 export default function CoursePlayer() {
+
   const [activeModuleIndex, setActiveModuleIndex] = useState(0);
   const [activeVideo, setActiveVideo] = useState('');
   const [iframeUrl, setIframeUrl] = useState('');
@@ -17,6 +20,7 @@ export default function CoursePlayer() {
   const { token } = useAuth();
   const { courseId } = useParams();
   const apiService = useApi();
+  const { data: userData } = useUser();
 
   const {
     data: courseData,
@@ -47,121 +51,8 @@ export default function CoursePlayer() {
     enabled: !!token,
     retry: false,
   });
-  // progess:  {
-  //     "courseId": "682c5e009a8550f41493cb6e",
-  //     "completed": false,
-  //     "moduleProgress": [
-  //         {
-  //             "courseId": "682c5e009a8550f41493cb6e",
-  //             "moduleId": "6823b2da0fa5f8d96466d588",
-  //             "moduleName": "1. Diabetic Foot as a Global Challenge – Anatomy, Pathophysiology, and Course Overview",
-  //             "completed": false,
-  //             "videoProgress": [
-  //                 {
-  //                     "videoId": "354526dc-1782-4a53-9b02-1dc3cfd9471e",
-  //                     "completed": true
-  //                 },
-  //                 {
-  //                     "videoId": "7ee2f9b6-f29e-4ee0-9b0a-8a134dc69a98",
-  //                     "completed": false
-  //                 },
-  //                 {
-  //                     "videoId": "85ff8a52-398a-4a4d-b3f8-6fd5d6168c88",
-  //                     "completed": false
-  //                 },
-  //                 {
-  //                     "videoId": "6bb234f2-a6e0-4b53-a334-c014278e05a5",
-  //                     "completed": false
-  //                 },
-  //                 {
-  //                     "videoId": "09423363-1693-448b-8a16-8ec739065064",
-  //                     "completed": false
-  //                 },
-  //                 {
-  //                     "videoId": "3bcaffbb-2459-4380-bdc0-218d0f2d61df",
-  //                     "completed": false
-  //                 }
-  //             ]
-  //         },
-  //         {
-  //             "courseId": "682c5e009a8550f41493cb6e",
-  //             "moduleId": "6823b2ee0fa5f8d96466d589",
-  //             "moduleName": "2. Diabetic Foot Evaluation and Biomechanics Assessment.",
-  //             "completed": false,
-  //             "videoProgress": [
-  //                 {
-  //                     "videoId": "42a009f3-13b6-4eaf-aa01-0818725b8e43",
-  //                     "completed": false
-  //                 },
-  //                 {
-  //                     "videoId": "d53dc5e7-4243-49cc-9181-e10803623d2d",
-  //                     "completed": false
-  //                 },
-  //                 {
-  //                     "videoId": "7ce126e1-79e3-4377-bd35-24bbc525793e",
-  //                     "completed": false
-  //                 },
-  //                 {
-  //                     "videoId": "706e7e9b-6512-4433-a3a4-8e541b858fae",
-  //                     "completed": false
-  //                 }
-  //             ]
-  //         },
-  //         {
-  //             "courseId": "682c5e009a8550f41493cb6e",
-  //             "moduleId": "6823b2ff0fa5f8d96466d58a",
-  //             "moduleName": "3. Wound Healing and Systemic Control in Diabetic Foot",
-  //             "completed": true,
-  //             "videoProgress": [
-  //                 {
-  //                     "videoId": "569d3f0a-3617-425e-b398-9f0a4a95086b",
-  //                     "completed": true
-  //                 }
-  //             ]
-  //         },
-  //         {
-  //             "courseId": "682c5e009a8550f41493cb6e",
-  //             "moduleId": "6823b3110fa5f8d96466d58b",
-  //             "moduleName": "4. Advanced Interventions in Diabetic Foot Care",
-  //             "completed": true,
-  //             "videoProgress": [
-  //                 {
-  //                     "videoId": "10372b43-0ed7-4b27-81cb-39caf8ced774",
-  //                     "completed": true
-  //                 }
-  //             ]
-  //         },
-  //         {
-  //             "courseId": "682c5e009a8550f41493cb6e",
-  //             "moduleId": "6823b39a0fa5f8d96466d58d",
-  //             "moduleName": "5. Advanced Surgical and Vascular Innovations in Diabetic Foot",
-  //             "completed": true,
-  //             "videoProgress": [
-  //                 {
-  //                     "videoId": "6c51499f-64a5-4818-bd16-715e362f9e2c",
-  //                     "completed": true
-  //                 }
-  //             ]
-  //         },
-  //         {
-  //             "courseId": "682c5e009a8550f41493cb6e",
-  //             "moduleId": "6823b3a50fa5f8d96466d58e",
-  //             "moduleName": "6. Structural Disorders of the Diabetic Foot",
-  //             "completed": false,
-  //             "videoProgress": [
-  //                 {
-  //                     "videoId": "80771159-85cc-44ce-ba37-85fe67a8e285",
-  //                     "completed": false
-  //                 }
-  //             ]
-  //         }
-  //     ]
-  // }
 
-  //
-
-  //
-
+  // Move all hooks above this line
   useEffect(() => {
     if (courseData && courseData.chapters?.length > 0) {
       const currentModule = courseData.chapters[activeModuleIndex];
@@ -173,24 +64,36 @@ export default function CoursePlayer() {
     }
   }, [courseData, activeModuleIndex]);
 
+  // Extracted handlers to reduce nesting
+  const handlePlayerEnded = () => {
+    console.log('Video has ended');
+    markVideoComplete();
+  };
+
+  const handlePlayerReady = (player) => {
+    console.log('Player is ready');
+    player.on('ended', handlePlayerEnded);
+  };
+
   useEffect(() => {
     loadPlayerScript()
       .then(() => {
         const player = new window.playerjs.Player('bunny-stream-embed');
-
-        player.on('ready', () => {
-          console.log('Player is ready');
-
-          player.on('ended', () => {
-            console.log('Video has ended');
-            markVideoComplete();
-          });
-        });
+        player.on('ready', () => handlePlayerReady(player));
       })
       .catch((error) => {
         console.error('Failed to load Player.js:', error);
       });
   }, [iframeUrl]);
+
+  // Do conditional rendering below
+  if (userData?.status !== "active") {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="text-xl font-semibold">Access Denied: Only active member can view this course.</span>
+      </div>
+    );
+  }
 
   const selectVideo = async (videoId) => {
     setActiveVideo(videoId);
@@ -332,7 +235,6 @@ export default function CoursePlayer() {
           </div>
         </aside>
       </div>
-
       {/* Course Modules */}
       <div className="mt-4 bg-white shadow m-6 p-6 rounded-lg">
         <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mb-4">
@@ -353,8 +255,8 @@ export default function CoursePlayer() {
               <button
                 onClick={() => setActiveModuleIndex((prev) => prev + 1)}
                 className={`truncate py-2 px-5 rounded-md text-base ${isCurrentModuleCompleted()
-                    ? 'bg-black text-white'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  ? 'bg-black text-white'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 disabled={!isCurrentModuleCompleted()}
               >

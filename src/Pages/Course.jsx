@@ -21,8 +21,7 @@ import { toast } from 'react-toastify';
 import { useAuth } from '../Context/AuthContext';
 import { useCart } from '../Context/CartContext';
 import ShowMoreText from '../Components/ShowMoreText';
-import { useEffect, useState } from 'react';
-
+import {useUser } from '../hooks/useUser';
 const StyledAccordion = styled(Accordion)`
   background-color: white;
   border-radius: 12px;
@@ -87,16 +86,12 @@ const Course = () => {
   const { addItem } = useCart();
   const { courseId } = useParams();
   const apiService = useApi();
+  const { data: userData } = useUser();
 
   const { data: Data, isLoading, error } = useQuery({
     queryKey: ['courseData', courseId],
     queryFn: async () => await apiService({ method: 'GET', endpoint: `/getCourseData/${courseId}` }),
     enabled: !!courseId,
-  });
-
-  const { data: userData } = useQuery({
-    queryKey: ['userData'],
-    queryFn: async () => await apiService({ method: 'GET', endpoint: '/getUser', token }),
   });
 
   const isCoursePurchased = userData?.user.myCourses?.some(course => course.courseId === courseId);

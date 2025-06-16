@@ -4,6 +4,7 @@ import { ChevronDown, VideoIcon, NotebookPen } from 'lucide-react';
 import Reviews from '../Components/course/Reviews';
 import { useQuery } from '@tanstack/react-query';
 import { useApi } from '../hooks/useApi';
+import { useUser } from '../hooks/useUser';
 import { Link, useParams } from 'react-router-dom';
 import ShowMoreText from '../Components/ShowMoreText';
 
@@ -68,8 +69,10 @@ const StyledAccordionDetails = styled(AccordionDetails)`
 // ... (imports remain unchanged)
 
 const MyCourseDetail = () => {
+
   const { courseId } = useParams();
   const apiService = useApi();
+  const { data: userData } = useUser();
 
   const { data: Data, isLoading, error } = useQuery({
     queryKey: ['courseData', courseId],
@@ -78,6 +81,14 @@ const MyCourseDetail = () => {
     },
     enabled: !!courseId,
   });
+
+  if (userData?.status !== "active") {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="text-xl font-semibold">Access Denied: Only active member can view this course.</span>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

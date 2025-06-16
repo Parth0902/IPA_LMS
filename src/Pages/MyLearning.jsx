@@ -4,11 +4,14 @@ import SideBar from '../Components/courses/SideBar';
 import Page from '../Components/courses/Page';
 import { useApi } from '../hooks/useApi';
 import { useAuth } from '../Context/AuthContext';
+import { useUser } from '../hooks/useUser';
 
 const MyLearing = () => {
   const { token } = useAuth();
   const [showSideBar, setShowSideBar] = useState(true);
   const apiService = useApi();
+  const { data: userData } = useUser();
+
 
   const {
     data: courseDataRaw,
@@ -26,6 +29,14 @@ const MyLearing = () => {
     },
     enabled: !!token,
   });
+
+  if (userData?.status !== "active") {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="text-xl font-semibold">Access Denied: Only active member can view this course.</span>
+      </div>
+    );
+  }
 
   // Safely ensure we only pass an array to Page
   const courses = Array.isArray(courseDataRaw) ? courseDataRaw : [];

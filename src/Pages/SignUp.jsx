@@ -5,7 +5,7 @@ import { useApi } from '../hooks/useApi';
 
 const SignUp = () => {
   const apiService = useApi();
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -39,9 +39,9 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsloading(true);
+    setIsLoading(true);
     if (!validateForm()) {
-      setIsloading(false);
+      setIsLoading(false);
       return;
     }
 
@@ -51,8 +51,8 @@ const SignUp = () => {
       data: { name: Name, email, password },
     });
 
-    setIsloading(false);
-    if (res) {
+    setIsLoading(false);
+    if (res?.message === 'User created successfully') {
       toast.success('Signup successful! Please login.');
       navigate('/login');
     }
