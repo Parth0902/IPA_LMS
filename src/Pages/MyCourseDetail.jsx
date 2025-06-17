@@ -82,7 +82,7 @@ const MyCourseDetail = () => {
     enabled: !!courseId,
   });
 
-  if (userData?.status !== "active") {
+  if (userData?.user.status !== "active") {
     return (
       <div className="flex items-center justify-center h-screen">
         <span className="text-xl font-semibold">Access Denied: Only active member can view this course.</span>
