@@ -30,7 +30,7 @@ const MyLearing = () => {
     enabled: !!token,
   });
 
-  if (userData?.user.status !== "active" && isLoading === false) {
+  if (userData?.user.status === "suspended" && isLoading === false) {
     return (
       <div className="flex items-center justify-center h-screen">
         <span className="text-xl font-semibold">Access Denied: Only active member can view this course.</span>
