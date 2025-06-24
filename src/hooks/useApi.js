@@ -31,7 +31,7 @@ export const useApi = () => {
 
       if (response.status === 401 && !toastShownRef.current) {
         toastShownRef.current = true;
-        toast.warn('Your session has expired. Please log in again.');
+        toast.warn('Invalid Credentials');
         logout(); // safe here
         return null;
       }

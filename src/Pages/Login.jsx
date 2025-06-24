@@ -34,6 +34,11 @@ const Login = () => {
       endpoint: '/login',
       data: { email, password },
     });
+    
+    if(res?.message){
+      toast.error(res.message);
+    }
+
     setIsLoading(false);
     if (res?.token) {
       login(res.token);
